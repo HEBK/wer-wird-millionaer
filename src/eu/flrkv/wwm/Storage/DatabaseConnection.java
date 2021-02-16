@@ -11,14 +11,13 @@ import java.sql.*;
 public class DatabaseConnection {
 
 
-
     public static boolean checkConnection(String pHost, String pPort, String pUser, String pPassword, String pDatabase)
     {
         try {
             Connection sql = DriverManager.getConnection("jdbc:mysql://" + pHost + ":" + pPort + "/" +pDatabase, pUser, pPassword);
             return true;
         } catch (SQLException throwables) {
-            Utils.consoleLog("EROR", "Failed to connect to the database! '"+pDatabase+"@"+pHost+"'");
+            Utils.consoleLog("ERROR", "Failed to connect to the database! '"+pDatabase+"@"+pHost+"'");
         }
         return false;
     }

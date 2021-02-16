@@ -8,8 +8,15 @@ import java.util.Properties;
 
 public class DatabaseConfiguration {
 
+    /**
+     * Pfad zur Konfigurationsdatei für die Datenbankverbindung
+     */
     private static final String file = "config/database.properties";
 
+    /**
+     *
+     * @return
+     */
     public static String getFileDir()
     {
         String[] splittedPath = file.split("/");
@@ -42,9 +49,10 @@ public class DatabaseConfiguration {
 
     private static boolean createConfigFile()
     {
-        File f = new File(file);
+        File f = new File(DatabaseConfiguration.getFileDir());
         try {
-            return f.createNewFile();
+            f.mkdirs();
+            return new File(file).createNewFile();
         } catch (IOException e) {
             return false;
         }

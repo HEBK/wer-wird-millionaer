@@ -23,31 +23,26 @@ public class MySQLConn extends FrameTemplate implements GUIUtils {
     private JButton checkSave;
     private JLabel response;
 
-    public MySQLConn() {
+    private final GUIController myController;
+
+    public MySQLConn(GUIController pController) {
+        // Call the parent constructor
         super("Wer wird Millionär | Datenbankverbindung", new Dimension(600, 335));
+
+        // Set the GUIController for this window
+        myController = pController;
 
         this.setDefaultCloseOperation(FrameTemplate.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setDefaultValues();
 
+
+        this.checkSave.setName("SQL_checkSave");
+
         this.add(dbConnPanel);
 
-        checkSave.addActionListener(e -> {
-            if (!DatabaseConnection.checkConnection(db_host.getText(), db_port.getText(), db_user.getText(), db_password.getText(), db_name.getText())) {
-                response.setText("Die Verbindung konnte nicht hergestellt werden!");
-            } else {
-                // Write config
-
-                DatabaseConfiguration.writeConfig("db_host", db_host.getText());
-                DatabaseConfiguration.writeConfig("db_port", db_port.getText());
-                DatabaseConfiguration.writeConfig("db_user", db_user.getText());
-                DatabaseConfiguration.writeConfig("db_pass", db_password.getText());
-                DatabaseConfiguration.writeConfig("db_name", db_name.getText());
-
-                checkSave.setText("Einrichtung abschließen");
-            }
-        });
-
+        // Set ActionListeners
+        this.setActionListeners();
     }
 
     @Override
@@ -57,6 +52,9 @@ public class MySQLConn extends FrameTemplate implements GUIUtils {
         this.setVisible(pVisibility);
     }
 
+    /**
+     * Setzt die Stamdardwerte für Eingabefelder dieses Fensters
+     */
     public void setDefaultValues()
     {
         db_host.setText("127.0.0.1");
@@ -64,4 +62,38 @@ public class MySQLConn extends FrameTemplate implements GUIUtils {
         db_name.setText("wwm");
         db_user.setText("wwmUser");
     }
+
+    /**
+     * Setzt die ActionListener für Elemente dieses Fensters
+     */
+    private void setActionListeners()
+    {
+        // Set Action Listener for save & check conn button
+        ActionListener saveDBConn = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!DatabaseConfiguration.configExists()) {
+                    if (!DatabaseConnection.checkConnection(db_host.getText(), db_port.getText(), db_user.getText(), db_password.getText(), db_name.getText())) {
+                        response.setText("Die Verbindung konnte nicht hergestellt werden!");
+                    } else {
+                        // Write config
+
+                        DatabaseConfiguration.writeConfig("db_host", db_host.getText());
+                        DatabaseConfiguration.writeConfig("db_port", db_port.getText());
+                        DatabaseConfiguration.writeConfig("db_user", db_user.getText());
+                        DatabaseConfiguration.writeConfig("db_pass", db_password.getText());
+                        DatabaseConfiguration.writeConfig("db_name", db_name.getText());
+
+                        response.setText("Die Verbindung zur Datenbank wurde hergestellt!");
+
+                        checkSave.setText("Einrichtung abschließen");
+                        checkSave.addActionListener(myController);
+                    }
+                }
+            }
+        };
+        checkSave.addActionListener(saveDBConn);
+    }
+
+
 }

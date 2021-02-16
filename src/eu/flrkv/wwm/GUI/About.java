@@ -9,26 +9,34 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class About extends JFrame {
+public class About extends FrameTemplate {
     private JPanel aboutGUI;
     private JLabel image;
     private JButton gitHubButton;
     private JButton licenseButton;
     private JButton closeButton;
+    private JLabel titleVersionLabel;
+
+    private GUIController myController;
 
 
-    public About()
+    public About(GUIController pController)
     {
-        super("Wer wird Millionär | Über");
+        super("Wer wird Millionär | Über", new Dimension(500, 375));
+
+        this.myController = pController;
+
         this.setVisible(true);
         this.add(aboutGUI);
         this.setResizable(false);
 
-        this.setSize(new Dimension(500, 375));
-        this.setIconImage(new ImageIcon("common/wwm.png").getImage());
+        setEventListeners();
 
         Utils.consoleLog("INFO", "Showing About window");
+    }
 
+    public void setEventListeners()
+    {
         gitHubButton.addActionListener(e -> {
             try {
                 Desktop.getDesktop().browse(new URI("https://github.com/HEBK/wer-wird-millionaer"));

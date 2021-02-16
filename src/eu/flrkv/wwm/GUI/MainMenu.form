@@ -40,7 +40,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="8b9c8" class="javax.swing.JButton" binding="startNewGameButton">
+          <component id="8b9c8" class="javax.swing.JButton" binding="newGameButton">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="200" height="-1"/>
@@ -163,7 +163,7 @@
             </constraints>
             <properties>
               <font name="JetBrains Mono" size="12" style="0"/>
-              <text value="Version: v0.0.3"/>
+              <text value="Version: v0.0.4"/>
             </properties>
           </component>
         </children>
@@ -176,7 +176,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="88164" class="javax.swing.JButton" default-binding="true">
+          <component id="88164" class="javax.swing.JButton" binding="questionListButton">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="200" height="-1"/>
