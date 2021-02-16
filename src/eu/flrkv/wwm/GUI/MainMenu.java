@@ -11,22 +11,32 @@ import java.awt.event.ActionListener;
 
 public class MainMenu extends FrameTemplate implements GUIUtils {
     private JPanel mainMenu;
-    private JButton startNewGameButton;
+    private JButton newGameButton;
     private JButton spielLadenButton;
     private JButton exitGameButton;
     private JButton aboutButton;
     private JLabel wwmImage;
+    private JButton questionListButton;
 
-    public MainMenu()
+    private GUIController myController;
+
+    public MainMenu(GUIController pController)
     {
         // Call of the parent constructor
         super("Wer wird Millionär | Hauptmenü", new Dimension(900, 600));
+
+        // Set window controller
+        myController = pController;
+
+        this.newGameButton.setName("MainMenu_newGame");
+        this.aboutButton.setName("MainMenu_about");
+        this.questionListButton.setName("MainMenu_questionList");
 
         // Minimum Size of the window
         this.setMinimumSize(new Dimension(700, 575));
 
         // Exit program on close
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(FrameTemplate.EXIT_ON_CLOSE);
 
         this.add(mainMenu);
 
@@ -44,9 +54,10 @@ public class MainMenu extends FrameTemplate implements GUIUtils {
                 Utils.exitProgram(-1);
             }
         });
-        aboutButton.addActionListener(e -> {
-            JFrame about = new About();
-        });
+
+        aboutButton.addActionListener(myController);
+        newGameButton.addActionListener(myController);
+        questionListButton.addActionListener(myController);
 
     }
 

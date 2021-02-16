@@ -13,8 +13,6 @@ public abstract class FrameTemplate extends JFrame {
         // Set the icon of the window
         this.setIconImage(new ImageIcon("common/wwm.png").getImage());
 
-        // Centerize the frame on screen
-        this.setLocationRelativeTo(null);
 
         // Set the dimensions of the window
         this.setSize(pDimension);

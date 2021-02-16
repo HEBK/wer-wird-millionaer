@@ -1,18 +1,24 @@
 package eu.flrkv.wwm;
 
 import com.bulenkov.darcula.DarculaLaf;
+import eu.flrkv.wwm.Exceptions.GameNotFoundException;
 import eu.flrkv.wwm.GUI.GUIController;
-import eu.flrkv.wwm.Storage.DatabaseConfiguration;
+import eu.flrkv.wwm.Game.Game;
+import eu.flrkv.wwm.Game.QuestionController;
 import eu.flrkv.wwm.Storage.DatabaseConnection;
 import eu.flrkv.wwm.Utils.Utils;
 
 
 import javax.swing.*;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.Objects;
 
 public class Main {
 
+    /**
+     * Methode, welche bei Programmstart ausgeführt wird. (Startpunkt)
+     * @param args Startargumente
+     */
     public static void main(String[] args) {
         // Main Info (for debugging)
         System.out.println("[INFO] System main stage reached.");
@@ -21,20 +27,26 @@ public class Main {
         registerDrivers();
 
         // Try to set new look & Feel
-        try {
-            UIManager.setLookAndFeel(new DarculaLaf());
-            Utils.consoleLog("INFO", "Loaded theme 'Darcula' from bulenkov (https://github.com/bulenkov/Darcula).");
-        } catch (UnsupportedLookAndFeelException e) {
-            Utils.consoleLog("ERROR", "Failed to load theme");
-        }
+        loadLookAndFeel(new DarculaLaf());
 
-        // Start GUI
+        // Create GUIController & Start GUI
         GUIController g = new GUIController();
         g.run();
 
+        try {
+            Game a = new Game(1);
+        } catch (GameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 
-
+    /**
+     * Registriert alle benötigten Treiber (JDBC -> SQL)
+     * Gibt Status/Fehlermeldungen in der Konsole aus.
+     */
     private static void registerDrivers()
     {
         try {
@@ -46,4 +58,18 @@ public class Main {
 
     }
 
+    /**
+     * Setzt das Design (Look and Feel) für das Swing UI.
+     * Gibt Status- & Fehlermeldungen in der Konsole aus.
+     * @param pLookAndFeel Das zu verwendende Design/LookAndFeel als Objekt des Datentyps 'LookAndFeel'
+     */
+    private static void loadLookAndFeel(LookAndFeel pLookAndFeel)
+    {
+        try {
+            UIManager.setLookAndFeel(pLookAndFeel);
+            Utils.consoleLog("INFO", "The LookAndFeel was loaded successfully!");
+        } catch (UnsupportedLookAndFeelException e) {
+            Utils.consoleLog("ERROR", "Failed to load theme!");
+        }
+    }
 }
