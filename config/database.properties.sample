@@ -1,0 +1,7 @@
+#This is the database connection configuration file.
+#Mon Feb 15 23:13:27 CET 2021
+db_name=myDatabaseName
+db_user=myDatabaseUSer
+db_port=3306
+db_pass=mySecretPassword
+db_host=sql.example.com
