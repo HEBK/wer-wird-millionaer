@@ -1,8 +1,6 @@
 package eu.flrkv.wwm.GUI;
 
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -83,6 +81,7 @@ public class QuestionList extends FrameTemplate {
         questionTable.setAutoCreateRowSorter(true);
 
         TableColumn col = null;
+        questionTable.setRowHeight(20);
         questionTable.getColumnModel().getColumn(0).setPreferredWidth(25);
         questionTable.getColumnModel().getColumn(1).setPreferredWidth(35);
         questionTable.getColumnModel().getColumn(2).setPreferredWidth(400);

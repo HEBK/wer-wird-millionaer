@@ -38,6 +38,9 @@ public class MainMenu extends FrameTemplate implements GUIUtils {
         // Exit program on close
         this.setDefaultCloseOperation(FrameTemplate.EXIT_ON_CLOSE);
 
+        // Set visible
+        this.setVisible(true);
+
         this.add(mainMenu);
 
 
