@@ -1,8 +1,6 @@
 package eu.flrkv.wwm.GUI;
 
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -48,31 +46,33 @@ public class QuestionList extends FrameTemplate {
 
     private void buildTable()
     {
-        String[] columnNames = {"Fragen-ID", "Fragestellung", "Richtige Antwort"};
+        // Bennenung der Spalten
+        String[] columnNames = {"Fragen-ID", "Schwierigkeitsgrad", "Fragestellung", "Richtige Antwort"};
         String[][] data = {
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"1", "nein", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
-                {"4512", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"}
+                {"4512", "Leicht", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Leicht", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Leicht", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Leicht", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Leicht", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Leicht", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Mittel", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Mittel", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Mittel", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Mittel", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Mittel", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Mittel", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Mittel", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Mittel", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Schwer", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Schwer", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Schwer", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Schwer", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Schwer", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Schwer", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Schwer", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Schwer", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+                {"4512", "Schwer", "Wer ist der/die derzeitige Vorsitzende der Christlich Demokratischen Union?", "Annegret Kramp-Karrenbauer"},
+
         };
 
         questionTable = new JTable(data, columnNames);
@@ -81,19 +81,11 @@ public class QuestionList extends FrameTemplate {
         questionTable.setAutoCreateRowSorter(true);
 
         TableColumn col = null;
+        questionTable.setRowHeight(20);
         questionTable.getColumnModel().getColumn(0).setPreferredWidth(25);
-        questionTable.getColumnModel().getColumn(1).setPreferredWidth(400);
-        questionTable.getColumnModel().getColumn(2).setPreferredWidth(275);
-
-
-        questionTable.getModel().addTableModelListener(new TableModelListener() {
-            @Override
-            public void tableChanged(TableModelEvent e) {
-                int tableRow = e.getFirstRow();
-                int tableCol = e.getColumn();
-            }
-        });
-
+        questionTable.getColumnModel().getColumn(1).setPreferredWidth(35);
+        questionTable.getColumnModel().getColumn(2).setPreferredWidth(400);
+        questionTable.getColumnModel().getColumn(3).setPreferredWidth(275);
     }
 
 

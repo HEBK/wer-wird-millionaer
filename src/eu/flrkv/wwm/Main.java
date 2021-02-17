@@ -1,17 +1,12 @@
 package eu.flrkv.wwm;
 
 import com.bulenkov.darcula.DarculaLaf;
-import eu.flrkv.wwm.Exceptions.GameNotFoundException;
 import eu.flrkv.wwm.GUI.GUIController;
-import eu.flrkv.wwm.Game.Game;
-import eu.flrkv.wwm.Game.QuestionController;
-import eu.flrkv.wwm.Storage.DatabaseConnection;
 import eu.flrkv.wwm.Utils.Utils;
-
 
 import javax.swing.*;
 import java.sql.*;
-import java.util.Objects;
+
 
 public class Main {
 
@@ -32,15 +27,6 @@ public class Main {
         // Create GUIController & Start GUI
         GUIController g = new GUIController();
         g.run();
-
-        try {
-            Game a = new Game(1);
-        } catch (GameNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-
     }
 
     /**

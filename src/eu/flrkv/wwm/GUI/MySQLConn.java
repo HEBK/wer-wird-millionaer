@@ -36,6 +36,8 @@ public class MySQLConn extends FrameTemplate implements GUIUtils {
         this.setResizable(false);
         this.setDefaultValues();
 
+        this.setVisible(true);
+
 
         this.checkSave.setName("SQL_checkSave");
 
