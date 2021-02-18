@@ -4,6 +4,7 @@ import eu.flrkv.wwm.Storage.DatabaseConfiguration;
 import eu.flrkv.wwm.Storage.DatabaseConnection;
 import eu.flrkv.wwm.Utils.Utils;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,10 +18,11 @@ public class GUIController implements ActionListener {
     private CreateNewGame newGame;
     private About about;
     private QuestionList questionList;
+    AddNewQuestion addNewQuestion;
 
     public GUIController()
     {
-        System.out.println("[INFO] GUIController was initialized successfully!");
+        Utils.consoleLog("INFO", "GUIController was initialized successfully!");
     }
 
     /**
@@ -32,7 +34,7 @@ public class GUIController implements ActionListener {
             if (DatabaseConnection.credentialsValid()) {
                 menu = new MainMenu(this);
             } else {
-                Error e = new Error("Die Datenbankverbindung ist ungültig!", "Wer wird Millionär | Datenbankfehler");
+                JOptionPane.showMessageDialog(null , "Die hinterlegte Datenbankverbindung ist ungültig!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
                 Utils.consoleLog("ERROR", "Could not start game software. Database connection is not functional!");
             }
         } else {
@@ -47,7 +49,7 @@ public class GUIController implements ActionListener {
      * @param pFrame Objekt des zu fokussierenden JFrame/Fenster
      * @return Gibt true zurück, wenn das Fenster erfolgreich fokussiert werden konnte.
      */
-    private boolean focusFrame(FrameTemplate pFrame)
+    private static boolean focusFrame(FrameTemplate pFrame)
     {
         // Prüfen ob das übergebene Fenster nicht null und nicht geschlossen ist.
         if (pFrame != null && pFrame.isDisplayable()) {
@@ -90,8 +92,14 @@ public class GUIController implements ActionListener {
                 }
                 break;
             case "MainMenu_questionList":
-                if (!focusFrame(questionList)) {
-                    questionList = new QuestionList();
+                if (!focusFrame(questionList) && !focusFrame(addNewQuestion)) {
+                    questionList = new QuestionList(this);
+                }
+                break;
+            case "QuestionList_addQuestion":
+                questionList.dispose();
+                if (!focusFrame(addNewQuestion)) {
+                    addNewQuestion = new AddNewQuestion(this);
                 }
                 break;
             default:

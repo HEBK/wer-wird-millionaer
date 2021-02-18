@@ -1,5 +1,7 @@
 package eu.flrkv.wwm.Utils;
 
+import javax.swing.*;
+
 public class Utils {
 
     private static final String version = "v0.0.4";
@@ -16,7 +18,8 @@ public class Utils {
      */
     public static void consoleLog(String pPrefix, String pMessage)
     {
-        System.out.println("["+pPrefix+"] " + pMessage);
+        pPrefix = "[" + pPrefix + "]";
+        System.out.println(pPrefix + " " + pMessage);
     }
 
     /**
@@ -25,7 +28,7 @@ public class Utils {
      */
     public static void exitProgram(int pStatus)
     {
-        Utils.consoleLog("INFO", "Program is stopping...");
+        consoleLog("INFO", "Program is stopping...");
         System.exit(pStatus);
     }
 
@@ -40,6 +43,11 @@ public class Utils {
         } catch (InterruptedException e) {
             // Null
         }
+    }
+
+    public static ImageIcon getImageIcon()
+    {
+        return new ImageIcon("common/wwm.png");
     }
 
 

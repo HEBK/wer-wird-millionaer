@@ -36,6 +36,11 @@ public class Game {
     private String gameName;
 
     /**
+     * Fragen Controller
+     */
+    private QuestionController questionController;
+
+    /**
      * Konstruktor um ein bereits vorhandenes Spiel fortzuführen.
      * @param pGameID Unique ID des Spiels, welches fortgeführt werden soll
      */
@@ -81,7 +86,7 @@ public class Game {
      */
     public int[] getIDsOfUsedQuestions()
     {
-        String allIDS = "1,9,121,1854,15481,1815";
+        String allIDS = "1,9,121,1854,15481,1815"; // DUMMY
         String[] f = allIDS.split(",");
 
         int[] i = new int[f.length];

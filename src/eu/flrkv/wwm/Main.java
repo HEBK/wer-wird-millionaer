@@ -16,7 +16,7 @@ public class Main {
      */
     public static void main(String[] args) {
         // Main Info (for debugging)
-        System.out.println("[INFO] System main stage reached.");
+        Utils.consoleLog("INFO", "System main stage reached.");
 
         // Load drivers
         registerDrivers();
@@ -55,7 +55,7 @@ public class Main {
             UIManager.setLookAndFeel(pLookAndFeel);
             Utils.consoleLog("INFO", "The LookAndFeel was loaded successfully!");
         } catch (UnsupportedLookAndFeelException e) {
-            Utils.consoleLog("ERROR", "Failed to load theme!");
+            Utils.consoleLog("ERROR", "Failed to load LookAndFeel!");
         }
     }
 }

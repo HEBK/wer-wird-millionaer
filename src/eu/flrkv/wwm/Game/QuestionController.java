@@ -104,6 +104,21 @@ public class QuestionController {
         return null;
     }
 
+    public static boolean deleteQuestion(int pQuestionID) {
+        try {
+            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("DELETE FROM wwm_questions WHERE ID = ?");
+            ps.setInt(1, pQuestionID);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            Utils.consoleLog("ERROR", "There was an error connecting to the database!");
+        }
+        return false;
+    }
+
+    /**
+     * Holt alle Fragen aus der Datenbank und gibt diese zurück.
+     * @return Gibt die Fragen als ArrayList mit den Question Objekten zurück
+     */
     public static ArrayList<Question> getAllQuestions()
     {
         ArrayList<Question> questions = new ArrayList<Question>();
@@ -120,4 +135,19 @@ public class QuestionController {
         return questions;
     }
 
+    /**
+     * Zählt alle Zeilen (Frageanzahl) der Tabelle wwm_questions
+     * @return Gibt die Anzahl der Zeilen als Integer zurück.
+     */
+    public static int getQuestionCount()
+    {
+        try {
+            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("SELECT COUNT(*) AS row_count FROM wwm_questions");
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getInt("row_count");
+        } catch (SQLException e) {
+            return -1;
+        }
+    }
 }

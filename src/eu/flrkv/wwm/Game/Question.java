@@ -96,4 +96,18 @@ public class Question {
     public int getId() {
         return id;
     }
+
+    public String getPlainDifficulty()
+    {
+        switch (this.difficulty) {
+            case 1:
+                return "Leicht";
+            case 2:
+                return "Mittel";
+            case 3:
+                return "Schwer";
+            default:
+                return "n/A";
+        }
+    }
 }

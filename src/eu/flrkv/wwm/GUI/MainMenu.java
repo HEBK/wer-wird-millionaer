@@ -1,7 +1,5 @@
 package eu.flrkv.wwm.GUI;
 
-import eu.flrkv.wwm.GUI.Interfaces.GUIUtils;
-import eu.flrkv.wwm.Main;
 import eu.flrkv.wwm.Utils.Utils;
 
 import javax.swing.*;
@@ -9,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainMenu extends FrameTemplate implements GUIUtils {
+public class MainMenu extends FrameTemplate {
     private JPanel mainMenu;
     private JButton newGameButton;
     private JButton spielLadenButton;
@@ -64,13 +62,6 @@ public class MainMenu extends FrameTemplate implements GUIUtils {
 
     }
 
-    @Override
-    public void showMe(boolean pVisibility)
-    {
-        // Console logging
-        Utils.consoleLog("INFO", "MainMenu window changed its visibility.");
-        this.setVisible(pVisibility);
-    }
 
     private void createUIComponents() {
         wwmImage = new JLabel(new ImageIcon("common/wwm_120x120.png"));
