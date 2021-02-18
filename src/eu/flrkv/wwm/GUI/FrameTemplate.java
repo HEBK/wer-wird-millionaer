@@ -1,5 +1,7 @@
 package eu.flrkv.wwm.GUI;
 
+import eu.flrkv.wwm.Utils.Utils;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,7 +13,7 @@ public abstract class FrameTemplate extends JFrame {
         super(pTitle);
 
         // Set the icon of the window
-        this.setIconImage(new ImageIcon("common/wwm.png").getImage());
+        this.setIconImage(Utils.getImageIcon().getImage());
 
 
         // Set the dimensions of the window

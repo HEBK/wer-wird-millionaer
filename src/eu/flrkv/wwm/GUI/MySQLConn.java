@@ -1,17 +1,14 @@
 package eu.flrkv.wwm.GUI;
 
-import eu.flrkv.wwm.GUI.Interfaces.GUIUtils;
 import eu.flrkv.wwm.Storage.DatabaseConfiguration;
 import eu.flrkv.wwm.Storage.DatabaseConnection;
-import eu.flrkv.wwm.Utils.Utils;
-import jdk.jshell.execution.Util;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MySQLConn extends FrameTemplate implements GUIUtils {
+public class MySQLConn extends FrameTemplate {
 
 
     private JPanel dbConnPanel;
@@ -47,13 +44,6 @@ public class MySQLConn extends FrameTemplate implements GUIUtils {
         this.setActionListeners();
     }
 
-    @Override
-    public void showMe(boolean pVisibility)
-    {
-        Utils.consoleLog("INFO", "MySQLConn window changed its visibility.");
-        this.setVisible(pVisibility);
-    }
-
     /**
      * Setzt die Stamdardwerte für Eingabefelder dieses Fensters
      */
@@ -77,6 +67,7 @@ public class MySQLConn extends FrameTemplate implements GUIUtils {
                 if (!DatabaseConfiguration.configExists()) {
                     if (!DatabaseConnection.checkConnection(db_host.getText(), db_port.getText(), db_user.getText(), db_password.getText(), db_name.getText())) {
                         response.setText("Die Verbindung konnte nicht hergestellt werden!");
+                        JOptionPane.showMessageDialog(null, "Die Verbindung konnte nicht hergestellt werden!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
                     } else {
                         // Write config
 
@@ -86,9 +77,11 @@ public class MySQLConn extends FrameTemplate implements GUIUtils {
                         DatabaseConfiguration.writeConfig("db_pass", db_password.getText());
                         DatabaseConfiguration.writeConfig("db_name", db_name.getText());
 
-                        response.setText("Die Verbindung zur Datenbank wurde hergestellt!");
+                        DatabaseConnection.executeScript("common/initSQL.sql");
+                        response.setText("Die Verbindung zur Datenbank wurde erfolgreich hergestellt!");
+                        JOptionPane.showMessageDialog(null, "Die Verbindung zur Datenbank wurde erfolgreich hergestellt!", "Wer wird Millionär | Datenbankverbindung", JOptionPane.INFORMATION_MESSAGE);
 
-                        checkSave.setText("Einrichtung abschließen");
+                        checkSave.setText("Zum Hauptmenü");
                         checkSave.addActionListener(myController);
                     }
                 }
