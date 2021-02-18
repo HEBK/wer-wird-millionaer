@@ -1,11 +1,13 @@
 package eu.flrkv.wwm.Storage;
 
 import eu.flrkv.wwm.Utils.Utils;
-import jdk.jshell.execution.Util;
+import org.apache.ibatis.jdbc.ScriptRunner;
 
-import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 
 public class DatabaseConnection {
@@ -14,7 +16,7 @@ public class DatabaseConnection {
     public static boolean checkConnection(String pHost, String pPort, String pUser, String pPassword, String pDatabase)
     {
         try {
-            Connection sql = DriverManager.getConnection("jdbc:mysql://" + pHost + ":" + pPort + "/" +pDatabase, pUser, pPassword);
+            Connection sql = DriverManager.getConnection("jdbc:mysql://" + pHost + ":" + pPort + "/" + pDatabase + "?characterEncoding=utf8", pUser, pPassword);
             return true;
         } catch (SQLException throwables) {
             Utils.consoleLog("ERROR", "Failed to connect to the database! '"+pDatabase+"@"+pHost+"'");
@@ -60,6 +62,25 @@ public class DatabaseConnection {
                         DatabaseConfiguration.readConfig("db_name"));
         }
         return false;
+    }
+
+    /**
+     * Führt den Inhalt einer SQL-Skriptdatei auf dem SQL-Server aus.
+     * @param pScriptPath Pfad zur SQL-Skriptdatei
+     */
+    public static void executeScript(String pScriptPath)
+    {
+        try {
+            Utils.consoleLog("INFO", "Executing SQL-File '"+pScriptPath+"' ...");
+            ScriptRunner runner = new ScriptRunner(getConnection());
+            runner.runScript(new InputStreamReader(new FileInputStream(pScriptPath), StandardCharsets.UTF_8));
+            runner.setStopOnError(false);
+            runner.closeConnection();
+        } catch (FileNotFoundException e) {
+            Utils.consoleLog("ERROR", "The SQL File ('"+pScriptPath+"') was not found!");
+        } catch (SQLException exception) {
+            Utils.consoleLog("ERROR", "Database connection error or invalid sql file!");
+        }
     }
 
 
