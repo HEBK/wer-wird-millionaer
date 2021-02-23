@@ -1,6 +1,7 @@
 package eu.flrkv.wwm.Game;
 
 import eu.flrkv.wwm.Exceptions.GameNotFoundException;
+import eu.flrkv.wwm.GUI.GameWindow;
 import eu.flrkv.wwm.Storage.DatabaseConnection;
 import eu.flrkv.wwm.Utils.Utils;
 
@@ -41,10 +42,15 @@ public class Game {
     private QuestionController questionController;
 
     /**
+     * Spielfenster
+     */
+    private GameWindow gameWindow;
+
+    /**
      * Konstruktor um ein bereits vorhandenes Spiel fortzuführen.
      * @param pGameID Unique ID des Spiels, welches fortgeführt werden soll
      */
-    public Game(int pGameID) throws GameNotFoundException {
+    public Game(GameWindow pGameWindow, int pGameID) throws GameNotFoundException {
         if (gameExists(pGameID)) {
             this.gameID = pGameID;
         } else {
@@ -57,7 +63,7 @@ public class Game {
      * @param pGameName Name des Spielstandes
      * @param pGamerTag Name des Spielers
      */
-    public Game(String pGameName, String pGamerTag)
+    public Game(GameWindow pGameWindow, String pGameName, String pGamerTag)
     {
 
     }
