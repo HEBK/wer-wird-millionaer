@@ -41,6 +41,8 @@ public class QuestionList extends FrameTemplate {
         this.setEventListeners();
 
         this.setQuestionCountLabel(questionTable.getRowCount());
+
+        refreshButton.setEnabled(false);
     }
 
     private void setQuestionCountLabel(int pCount)

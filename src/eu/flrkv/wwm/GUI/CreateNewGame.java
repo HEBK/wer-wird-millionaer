@@ -34,6 +34,13 @@ public class CreateNewGame extends FrameTemplate{
         this.setEventListeners();
 
         this.setDefaultCloseOperation(FrameTemplate.DISPOSE_ON_CLOSE);
+
+        this.startGameButton.setEnabled(false);
+
+
+
+        this.startGameButton.setName("CreateNewGame_start");
+        this.startGameButton.addActionListener(myController);
     }
 
     public void updateResponse(String pResponse)
@@ -61,6 +68,7 @@ public class CreateNewGame extends FrameTemplate{
                 if (gameNameInput.getText().length() >= 20) {
                     e.consume();
                 }
+                startGameButton.setEnabled(gameNameInput.getText().length() >= 5);
             }
         });
 
@@ -70,8 +78,19 @@ public class CreateNewGame extends FrameTemplate{
                 if (gamertagInput.getText().length() >= 16) {
                     e.consume();
                 }
+                startGameButton.setEnabled(gamertagInput.getText().length() >= 5);
             }
         });
+    }
+
+    public String getGameName()
+    {
+        return gameNameInput.getText();
+    }
+
+    public String getGamerTag()
+    {
+        return gamertagInput.getText();
     }
 
 

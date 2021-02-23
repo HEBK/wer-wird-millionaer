@@ -1,5 +1,6 @@
 package eu.flrkv.wwm.GUI;
 
+import eu.flrkv.wwm.Game.Game;
 import eu.flrkv.wwm.Storage.DatabaseConfiguration;
 import eu.flrkv.wwm.Storage.DatabaseConnection;
 import eu.flrkv.wwm.Utils.Utils;
@@ -8,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class GUIController implements ActionListener {
 
@@ -18,11 +21,17 @@ public class GUIController implements ActionListener {
     private CreateNewGame newGame;
     private About about;
     private QuestionList questionList;
-    AddNewQuestion addNewQuestion;
+    private AddNewQuestion addNewQuestion;
+
+
+    // Ingame situation
+    private GameWindow gameWindow;
+    private Game game;
 
     public GUIController()
     {
         Utils.consoleLog("INFO", "GUIController was initialized successfully!");
+
     }
 
     /**
@@ -102,10 +111,39 @@ public class GUIController implements ActionListener {
                     addNewQuestion = new AddNewQuestion(this);
                 }
                 break;
+            case "CreateNewGame_start":
+                // Neues Spielfenster
+                gameWindow = new GameWindow(this);
+
+                // Neues Spiel erstellen & Spielfenster dafür verwenden
+                game = new Game(gameWindow, newGame.getGameName(), newGame.getGamerTag());
+
+                // Event bei Schließung des Spielfensters setzen
+                setWindowListener();
+                menu.setVisible(false);
+                newGame.dispose();
+                break;
             default:
                 Utils.consoleLog("WARNING", "Could not assign performed Action to component!");
         }
     }
+
+    private void setWindowListener()
+    {
+        gameWindow.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if (JOptionPane.showConfirmDialog(gameWindow, "Zum Hauptmenü zurückkehren?", "Wer wird Millionär | Zurück zum Hauptmenü", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                    gameWindow.dispose();
+                    game = null;
+                    gameWindow = null;
+                    menu.setVisible(true);
+                }
+            }
+        });
+    }
+
+
 
 
 }

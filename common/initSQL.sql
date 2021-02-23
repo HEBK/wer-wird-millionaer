@@ -27,6 +27,15 @@ CREATE TABLE IF NOT EXISTS `wwm_savedGames` (
 
 ) engine=innodb DEFAULT charset=utf8 COLLATE=utf8_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `wwm_highscores` (
+
+    `ID`                    INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `gamerTag`              VARCHAR(16) NOT NULL COLLATE utf8_unicode_ci,
+    `questionCount`         INT(2) NOT NULL,
+    `jokersLeft`            INT(1) NOT NULL
+
+) engine=innodb DEFAULT charset=utf8 COLLATE=utf8_unicode_ci;
+
 
 INSERT INTO `wwm_questions` (difficulty, question, answer0, answer1, answer2, answer3) VALUES
     -- Einfache Fragen
@@ -35,6 +44,19 @@ INSERT INTO `wwm_questions` (difficulty, question, answer0, answer1, answer2, an
     (1, 'Lässt man sich eine Beziehung mit einer Schönheitskönigin ein, hat man sozusagen …?', 'ein Ungleich-Gewicht', 'ein Über-Maß', 'eine Schief-Lage', 'ein Miss-Verhältnis'),
     (1, 'Gesundheitsbewusste Strandurlauber sind auch beim …?', 'Nünftig vernünftig', 'Sichtig umsichtig', 'Sam achtsam', 'Sonnen besonnen'),
     (1, 'Wer einen Kellner sucht, findet ihn buchstäblich im …?', 'September', 'November', 'Dezember', 'Oktober'),
+    (1, 'Was ist die Hauptstadt von Portugal?', 'Madrid', 'Valencia', 'Barcelona', 'Lissabon'),
+    (1, 'Wie heißt das größte Technologieunternehmen in Südkorea?', 'LG Electronics', 'Hyundai Motor Company', 'Huawei', 'Samsung Electronics'),
+    (1, 'Wie lange dauerte der 30-jährige Krieg?', '25 Jahre', '15 Jahre', '45 Jahre', '30 Jahre'),
+    (1, 'Welcher ist der „rote Planet“ unseres Sonnensystems?', 'Venus', 'Merkur', 'Jupiter', 'Mars'),
+    (1, 'Welcher Planet unseres Sonnensystems ist der Sonne am nächsten?', 'Venus', 'Uranus', 'Pluto', 'Merkur'),
+    (1, 'Welches Land ist flächenmäßig das zweitgrößte der Erde?', 'China', 'Russland', 'USA', 'Kanada'),
+    (1, 'Wie viele Planeten hat unser Sonnensystem?', '7', '9', '10', '8'),
+    (1, 'Wie viele Sekunden hat ein Tag?', '24', '32400', '6400', '86400'),
+    (1, 'Wer wählt den Bundespräsidenten?', 'Bundeskanzler', 'Bundesrat', 'Bundestag', 'Bundesversammlung'),
+    (1, 'Wofür steht die Abkürzung KGaA?', 'Kreditgesellschaft auf Aktien', 'Kompetenzgesellschaft auf Aktien', 'Kardinalgesellschaft auf Aktien', 'Kommanditgesellschaft auf Aktien'),
+    (1, 'Wer ist der derzeitige Bundestagspräsident? (2021)', 'Thomas Oppermann', 'Wolfgang Kubicki', 'Petra Pau', 'Wolfgang Schäuble'),
+    (1, 'Welcher Partei gehörte der 16. US-Präsident Abraham Lincoln an?', 'Demokratische Partei', 'Grüne Partei', 'Parteilos', 'Republikanische Partei'),
+    (1, 'Gegen welchen US-Präsident wurden erstmals mehr als ein Impeachment-Verfahren gestartet?', 'Richard Nixon', 'Dwight D. Eisenhower', 'George H. W. Bush', 'Donald Trump'),
 
     -- Mittlere Fragen
     (2, 'In welcher Sendung kamen unter anderem Jeanette Biedermann, Mark Forster und Lena Meyer-Landrut ins Tauschgeschäft?', 'Koch mein Leibgericht', 'Verführ meine Frau', 'Bewohn mein Haus', 'Sing meinen Song'),
@@ -42,11 +64,38 @@ INSERT INTO `wwm_questions` (difficulty, question, answer0, answer1, answer2, an
     (2, 'Wobei wird vor einem sogenannten Rebound-Effekt gewarnt, der nicht selten zu einer Abhängigkeit führt?', 'Haarspray', 'Deospray', 'Pfefferspray', 'Nasenspray'),
     (2, 'Die Darstellung welcher Figur wurde schon zweimal mit einem Schauspiel-Oscar prämiert?', 'Dr. Hannibal Lecter', 'Forrest Gump', 'Truman Capote', 'Joker'),
     (2, 'Alfred Gislason ist seit Februar 2020 bereits der zweite Isländer im Amt des deutschen Männer-Nationaltrainers im …?', 'Basketball', 'Volleyball', 'Tennis', 'Handball'),
+    (2, 'Wie stark ist die Erdachse zur Umlaufbahn (Ekliptik) geneigt?', '25°', '19.25°', '21.5°', '23.5°'),
+    (2, 'Wie viele Herzen besitzt ein Oktopus?', 'zwei', 'fünf', 'vier', 'drei'),
+    (2, '1930 erhielten Albert Einstein und ein Kollege das US-Patent 1781541. Wofür war es?', 'Mikrowelle', 'Tauchsieder', 'Brotbackautomat', 'Kühlschrank'),
+    (2, 'Wie viele Weihnachtsbäume werden in Deutschland pro Jahr verkauft?', 'Etwa 45 Millionen', 'Etwa 20 Millionen', 'Etwa 55 Millionen', 'Etwa 30 Millionen'),
+    (2, 'Wie viele Einkerbungen hat ein Golfball?', '512', '128', '256', '336'),
+    (2, 'Wer war während des 2. Weltkriegs US-Präsident?', 'John F. Kennedy', 'Harry S. Truman', 'Bill Clinton', 'Roosevelt'),
+    (2, 'Aus wie vielen Kräutern ist Jägermeister gemacht?', '54', '46', '36', '56'),
+    (2, 'Wie viele Bandscheiben hat ein Mensch?', '22', '28', '27', '23'),
+    (2, 'Woraus besteht ein Diamant?', 'Helium', 'Francium', 'Wasserstoff', 'Kohlenstoff'),
+    (2, 'Wie viele Stachel hat ein Igel ungefähr?', '2.500', '500', '1.000', '5.000'),
+    (2, 'Wo fand 1816 die erste Sitzung des ersten Deutschen Bundestages statt?', 'Berlin', 'Bonn', 'München', 'Frankfurt am Main'),
+    (2, 'J.R.R. Tolkien schrieb…', '… Die unendliche Geschichte', '… Hänsel und Gretel', '… Alice im Wunderland', '… Der Herr der Ringe'),
+    (2, 'Wie heißt die Hauptstadt Lettlands?', 'Rabat', 'Riat', 'Reykjavik', 'Riga'),
+    (2, 'Welches Land gehört nicht zu Afrika?', 'Niger', 'Kamerun', 'Algerien', 'Paraguay'),
+    (2, 'Wie heißt die Schicht der Atmosphäre, die der Erde am nächsten ist?', 'Stratosphäre', 'Mesosphäre', 'Thermosphäre', 'Troposphäre'),
+    (2, 'Wie viel Liter Luft kann die Lunge eines Blauwals maximal mit einmal einatmen fassen?', '2.500 Liter', '1.200 Liter', '3.900 Liter', '3.000 Liter'),
 
     -- Schwere Fragen
     (3, 'Wo befinden sich einige der höchsten Alpengipfel?', 'Monte-Purpur-Höhenzug', 'Monte-Lila-Gebirge', 'Monte-Magenta-Kette', 'Monte-Rosa-Massiv'),
+    (3, 'Was ist die durchschnittliche Oberflächentemperatur auf der Venus?', '215 °C', '615 °C', '395 °C', '460 ° C'),
+    (3, 'Wie viel Prozent der Masse des Sonnensystems befindet sich in der Sonne auf 1 Prozent genau?', '96 %', ' 89 %', '85 %', '99 %'),
     (3, 'Wo wurde der Schriftsteller geboren, der für den Roman „Herkunft“ 2019 mit dem Deutschen Buchpreis ausgezeichnet wurde?', 'Rhodesien', 'Ceylon', 'Tibet', 'Jugoslawien'),
     (3, 'Was war hierzulande bis in die 1950er noch gang und gäbe?', 'Beamtinnenkommunion', 'Krankenschwesterkollekte', 'Sekretärinnenbeichte', 'Lehrerinnenzöllibat'),
     (3, 'Das naturgegebene Schicksal welcher Pflanzen sieht vor, dass die Blüte bei den meisten Arten unweigerlich zu ihrem Tod führt?', 'Gingko', 'Rhododendron', 'Eukalyptus', 'Bambus'),
+    (3, 'Welches ist das einzige deutsche Bundesland, in dem keine kreisfreie Stadt existiert?', 'Brandenburg', 'Sachsen', 'Bremen', 'Saarland'),
+    (3, 'Wer bekämpfte sich im „Falklandkrieg“?', 'Deutschland und Frankreich', 'Kanada und Irland', 'Süd- und Nordkorea', 'Argentinien und Großbritannien'),
+    (3, 'Welcher Schweizer bekam 1901 den ersten Friedensnobelpreis?', 'Ernst Abbe', 'Antonio Abetti', 'Max Aub', 'Henry Dunant'),
+    (3, 'Welche Farbe hat ein Regenbogen ganz außen (oben)?', 'blau', 'gelb', 'grün', 'rot'),
+    (3, 'Wie lautet die Hauptstadt des US-Bundesstaates Alaska?', 'Atlanta', 'Denver', 'Frankfort', 'Juneau'),
+    (3, 'Welche Ordnungszahl hat Kupfer im Periodensystem der Elemente?', '31', '30', '28', '29'),
+    (3, 'Wer war der zweite Bundeskanzler Deutschlands (BRD)?', 'Helmut Schmidt', 'Konrad Adenauer', 'Gerhard Schröder', 'Ludwig Erhard'),
+    (3, 'Welcher Schauspieler verkörperte im Jahr 1965 James Bond?', 'Timothy Dalton', 'Roger Moore', 'Pierce Brosnan', 'Sean Connery'),
+    (3, 'Wie viele Jahre dauert es in etwa bis der Jupiter die Sonne umrundet hat?', '24 Jahre', '16 Jahre', '20 Jahre', '12 Jahre'),
     (3, 'Die klassisch genormte Europalette EPAL1 besteht aus 78 Nägeln, neun Klötzen und insgesamt wie vielen Brettern?', 'neun', 'zehn', 'zwölf', 'elf');
 
