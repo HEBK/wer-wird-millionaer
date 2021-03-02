@@ -50,7 +50,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="d09b4" class="javax.swing.JLabel">
+                  <component id="d09b4" class="javax.swing.JLabel" binding="fiftyFiftyJoker">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -630,7 +630,7 @@
                     <children>
                       <component id="c08a8" class="javax.swing.JTextPane" binding="bTextPane" default-binding="true">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="150" height="50"/>
                           </grid>
                         </constraints>

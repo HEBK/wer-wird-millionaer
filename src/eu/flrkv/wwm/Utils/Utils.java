@@ -4,13 +4,6 @@ import javax.swing.*;
 
 public class Utils {
 
-    private static final String version = "v0.0.4";
-
-    public static String getVersion()
-    {
-        return version;
-    }
-
     /**
      * Gibt eine Statusmeldung in der Konsole aus.
      * @param pPrefix Prefix/Typ der Statusmeldung (z.B. WARNING/ERROR/INFO)
@@ -47,7 +40,7 @@ public class Utils {
 
     public static ImageIcon getImageIcon()
     {
-        return new ImageIcon("common/wwm.png");
+        return new ImageIcon("common/logos/wwm.png");
     }
 
 

@@ -102,6 +102,6 @@ public class AddNewQuestion extends FrameTemplate {
 
 
     private void createUIComponents() {
-        logo = new JLabel(new ImageIcon("common/wwm_120x120.png"));
+        logo = new JLabel(new ImageIcon("common/logos/wwm_120x120.png"));
     }
 }

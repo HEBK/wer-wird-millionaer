@@ -58,7 +58,7 @@ public class GUIController implements ActionListener {
      * @param pFrame Objekt des zu fokussierenden JFrame/Fenster
      * @return Gibt true zurück, wenn das Fenster erfolgreich fokussiert werden konnte.
      */
-    private static boolean focusFrame(FrameTemplate pFrame)
+    private static boolean focusFrame(JFrame pFrame)
     {
         // Prüfen ob das übergebene Fenster nicht null und nicht geschlossen ist.
         if (pFrame != null && pFrame.isDisplayable()) {

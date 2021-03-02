@@ -64,6 +64,6 @@ public class MainMenu extends FrameTemplate {
 
 
     private void createUIComponents() {
-        wwmImage = new JLabel(new ImageIcon("common/wwm_120x120.png"));
+        wwmImage = new JLabel(new ImageIcon("common/logos/wwm_120x120.png"));
     }
 }

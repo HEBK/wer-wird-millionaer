@@ -80,6 +80,9 @@ INSERT INTO `wwm_questions` (difficulty, question, answer0, answer1, answer2, an
     (2, 'Welches Land gehört nicht zu Afrika?', 'Niger', 'Kamerun', 'Algerien', 'Paraguay'),
     (2, 'Wie heißt die Schicht der Atmosphäre, die der Erde am nächsten ist?', 'Stratosphäre', 'Mesosphäre', 'Thermosphäre', 'Troposphäre'),
     (2, 'Wie viel Liter Luft kann die Lunge eines Blauwals maximal mit einmal einatmen fassen?', '2.500 Liter', '1.200 Liter', '3.900 Liter', '3.000 Liter'),
+    (2, 'Womit sind viele Schneidebretter ausgestattet?', 'Wassergrube', 'Bierfurche', 'Weinkerbe', 'Saftrille'),
+    (2, 'Welchem Motto hat sich der als "Upcycling" populär gewordene Trend verschrieben?', 'klein, aber oho', 'ohne Moos nix los', 'wer rastet, der rostet', 'aus Alt mach Neu'),
+    (2, 'Welches deutsche KFZ-Kennzeichenkürzel steht nicht für die einwohnerreichste deutsche Stadt, deren Name mit diesem Buchstaben beginnt?', 'K', 'S', 'D', 'H'),
 
     -- Schwere Fragen
     (3, 'Wo befinden sich einige der höchsten Alpengipfel?', 'Monte-Purpur-Höhenzug', 'Monte-Lila-Gebirge', 'Monte-Magenta-Kette', 'Monte-Rosa-Massiv'),

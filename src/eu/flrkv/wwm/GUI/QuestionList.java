@@ -139,7 +139,7 @@ public class QuestionList extends FrameTemplate {
         for (int i=0; i< allQuestions.size(); i++) {
             q = allQuestions.get(i);
             data[i][0] = String.valueOf(q.getId());
-            data[i][1] = q.getPlainDifficulty();
+            data[i][1] = q.getDifficultyString();
             data[i][2] = q.getQuestion();
             data[i][3] = q.getRightAnswer();
         }
@@ -157,7 +157,7 @@ public class QuestionList extends FrameTemplate {
     }
 
     private void createUIComponents() {
-        logoImage = new JLabel(new ImageIcon("common/wwm_120x120.png"));
+        logoImage = new JLabel(new ImageIcon("common/logos/wwm_120x120.png"));
         buildTable();
     }
 }

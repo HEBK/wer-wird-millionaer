@@ -50,7 +50,7 @@ public class CreateNewGame extends FrameTemplate{
     }
 
     private void createUIComponents() {
-        logoImage = new JLabel(new ImageIcon("common/wwm_120x120.png"));
+        logoImage = new JLabel(new ImageIcon("common/logos/wwm_120x120.png"));
     }
 
     public void setElements()
