@@ -139,29 +139,4 @@ public class Game {
     {
         return this.currentQuestionNumber;
     }
-
-
-
-
-    /*
-        public boolean setCurrentQuestionID(int pID)
-        {
-
-        }
-
-        public boolean setCurrentQuestionNumber(int pNumber)
-        {
-
-        }
-
-        private boolean setGameName(String pGameName)
-        {
-
-        }
-
-        private boolean setGamerTag(String pGamerTag)
-        {
-
-        }
-    */
 }

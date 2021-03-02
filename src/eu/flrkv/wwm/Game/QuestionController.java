@@ -26,7 +26,7 @@ public class QuestionController {
     }
 
     /**
-     * Holte eine neu noch nicht verwandte Frage aus der MySQL-Dtaenbanktabelle 'wwm_questions'
+     * Holte eine neu noch nicht verwendete Frage aus der MySQL-Dtaenbanktabelle 'wwm_questions'
      * @param pDifficulty Schwierigkeitskategorie der Frage (0 -> Leicht, 1 -> Mittel, 2 -> Schwer)
      * @return Gibt die Frage als Objekt zurück.
      */
@@ -34,8 +34,6 @@ public class QuestionController {
     {
         return null;
     }
-
-
 
 
 
