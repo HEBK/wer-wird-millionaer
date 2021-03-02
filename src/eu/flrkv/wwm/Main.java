@@ -26,7 +26,15 @@ public class Main {
 
         // Create GUIController & Start GUI
         GUIController g = new GUIController();
-        g.run();
+
+
+        SwingUtilities.invokeLater(new Runnable(){
+            @Override
+            public void run(){
+                g.run();
+            }
+        });
+       // g.run();
     }
 
     /**
