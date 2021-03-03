@@ -112,11 +112,11 @@ public class GUIController implements ActionListener {
                 }
                 break;
             case "CreateNewGame_start":
-                // Neues Spielfenster
-                gameWindow = new GameWindow(this);
-
                 // Neues Spiel erstellen & Spielfenster dafür verwenden
-                game = new Game(gameWindow, newGame.getGameName(), newGame.getGamerTag());
+                game = new Game(newGame.getGameName(), newGame.getGamerTag());
+
+                // Neues Spielfenster
+                gameWindow = new GameWindow(this, game);
 
                 // Event bei Schließung des Spielfensters setzen
                 setWindowListener();
@@ -128,19 +128,56 @@ public class GUIController implements ActionListener {
         }
     }
 
+
+
+
     private void setWindowListener()
     {
         gameWindow.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                if (JOptionPane.showConfirmDialog(gameWindow, "Zum Hauptmenü zurückkehren?", "Wer wird Millionär | Zurück zum Hauptmenü", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                    gameWindow.dispose();
-                    game = null;
-                    gameWindow = null;
-                    menu.setVisible(true);
-                }
+                exitToMainMenu();
             }
         });
+    }
+
+
+    /**
+     * Zeigt ein Dialogfenster um zurück zum Hauptmenü zu gelangen und das aktuelle Spiel zu beenden.
+     */
+    public void exitToMainMenu()
+    {
+        if (game != null && gameWindow != null) {
+
+            // Benutzerentscheidung
+            int select = JOptionPane.showConfirmDialog(gameWindow, "Möchten Sie Ihr aktuelles Spiel speichern?", "Wer wird Millionär | Zurück zum Hauptmenü", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+            // Spiel speichern
+            if (select == JOptionPane.YES_OPTION) {
+                if (!game.saveGame()) {
+                    if (JOptionPane.showConfirmDialog(gameWindow, "Das Spiel konnte nicht gespeichert werden! Ohne Speichern verlassen?", "Wer wird Millionär | Fehler", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) == JOptionPane.NO_OPTION) {
+                        return;
+                    }
+                }
+            }
+
+            // Doch weiter spielen
+            if (select == JOptionPane.CANCEL_OPTION) {
+                return;
+            }
+
+            // Fenster schließen
+            gameWindow.dispose();
+
+            // Aktuelles Spiel aus dem SPeicher entfernen
+            game = null;
+
+            // Zugehöriges Spielfenster aus dem Speicher entfernen
+            gameWindow = null;
+
+            // Hauptmenü anzeigen
+            menu.setVisible(true);
+        }
     }
 
 

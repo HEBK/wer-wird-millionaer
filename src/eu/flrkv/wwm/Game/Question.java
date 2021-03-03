@@ -55,7 +55,7 @@ public class Question {
     public String[] getWrongAnswers()
     {
         String[] retAnswers = new String[3];
-        for (int i = 0; i < this.answers.length; i++) {
+        for (int i = 0; i < 3; i++) {
             retAnswers[i] = answers[i];
         }
         return retAnswers;
