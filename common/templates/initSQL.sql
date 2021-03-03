@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `wwm_savedGames` (
     `gameName`              VARCHAR(20) NOT NULL COLLATE utf8_unicode_ci,
     `gamerTag`              VARCHAR(16) NOT NULL COLLATE utf8_unicode_ci,
     `questionNumber`        INT(2) NOT NULL,
-    `currentQuestionID`     INT NOT NULL,
+    `currentQuestionID`     INT NULL DEFAULT NULL,
     `usedQuestions`         VARCHAR(255) COLLATE utf8_unicode_ci NULL DEFAULT NULL,
     `jokersLeft`            VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci,
 
