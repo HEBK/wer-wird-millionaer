@@ -29,7 +29,6 @@ public class CreateNewGame extends FrameTemplate{
 
         this.setResizable(false);
 
-        this.startGameButton.addActionListener(myController);
         this.setElements();
         this.setEventListeners();
 
