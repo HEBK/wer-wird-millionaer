@@ -77,7 +77,7 @@ public class MySQLConn extends FrameTemplate {
                         DatabaseConfiguration.writeConfig("db_pass", db_password.getText());
                         DatabaseConfiguration.writeConfig("db_name", db_name.getText());
 
-                        DatabaseConnection.executeScript("common/initSQL.sql");
+                        DatabaseConnection.executeScript("common/templates/initSQL.sql");
                         response.setText("Die Verbindung zur Datenbank wurde erfolgreich hergestellt!");
                         JOptionPane.showMessageDialog(null, "Die Verbindung zur Datenbank wurde erfolgreich hergestellt!", "Wer wird Millionär | Datenbankverbindung", JOptionPane.INFORMATION_MESSAGE);
 

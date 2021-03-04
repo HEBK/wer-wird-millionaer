@@ -1,4 +1,4 @@
-package eu.flrkv.wwm.Game;
+package eu.flrkv.wwm.Question;
 
 public class Question {
 
@@ -15,7 +15,7 @@ public class Question {
     /**
      * Antworten als Strings in einem Array
      */
-    private final String[] answer = new String[4];
+    private final String[] answers = new String[4];
 
     /**
      * Schwierigkeitsgrad als Integer
@@ -40,10 +40,10 @@ public class Question {
         this.id = pID;
         this.question = pQuestion;
 
-        this.answer[0] = pAnswer1;
-        this.answer[1] = pAnswer2;
-        this.answer[2] = pAnswer3;
-        this.answer[3] = pRightAnswer;
+        this.answers[0] = pAnswer1;
+        this.answers[1] = pAnswer2;
+        this.answers[2] = pAnswer3;
+        this.answers[3] = pRightAnswer;
 
         this.difficulty = pDifficulty;
     }
@@ -55,8 +55,8 @@ public class Question {
     public String[] getWrongAnswers()
     {
         String[] retAnswers = new String[3];
-        for (int i=0; i < this.answer.length; i++) {
-            retAnswers[i] = answer[i];
+        for (int i = 0; i < 3; i++) {
+            retAnswers[i] = answers[i];
         }
         return retAnswers;
     }
@@ -67,7 +67,7 @@ public class Question {
      */
     public String getRightAnswer()
     {
-        return answer[3];
+        return answers[3];
     }
 
     /**
@@ -97,7 +97,7 @@ public class Question {
         return id;
     }
 
-    public String getPlainDifficulty()
+    public String getDifficultyString()
     {
         switch (this.difficulty) {
             case 1:

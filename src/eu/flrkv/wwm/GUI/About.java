@@ -58,6 +58,6 @@ public class About extends FrameTemplate {
     }
 
     private void createUIComponents() {
-        image = new JLabel(new ImageIcon("common/wwm_120x120.png"));
+        image = new JLabel(new ImageIcon("common/logos/wwm_120x120.png"));
     }
 }

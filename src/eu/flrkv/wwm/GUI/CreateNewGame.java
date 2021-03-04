@@ -29,11 +29,17 @@ public class CreateNewGame extends FrameTemplate{
 
         this.setResizable(false);
 
-        this.startGameButton.addActionListener(myController);
         this.setElements();
         this.setEventListeners();
 
         this.setDefaultCloseOperation(FrameTemplate.DISPOSE_ON_CLOSE);
+
+        this.startGameButton.setEnabled(false);
+
+
+
+        this.startGameButton.setName("CreateNewGame_start");
+        this.startGameButton.addActionListener(myController);
     }
 
     public void updateResponse(String pResponse)
@@ -43,7 +49,7 @@ public class CreateNewGame extends FrameTemplate{
     }
 
     private void createUIComponents() {
-        logoImage = new JLabel(new ImageIcon("common/wwm_120x120.png"));
+        logoImage = new JLabel(new ImageIcon("common/logos/wwm_120x120.png"));
     }
 
     public void setElements()
@@ -61,6 +67,7 @@ public class CreateNewGame extends FrameTemplate{
                 if (gameNameInput.getText().length() >= 20) {
                     e.consume();
                 }
+                startGameButton.setEnabled(gameNameInput.getText().length() >= 5);
             }
         });
 
@@ -70,8 +77,19 @@ public class CreateNewGame extends FrameTemplate{
                 if (gamertagInput.getText().length() >= 16) {
                     e.consume();
                 }
+                startGameButton.setEnabled(gamertagInput.getText().length() >= 5);
             }
         });
+    }
+
+    public String getGameName()
+    {
+        return gameNameInput.getText();
+    }
+
+    public String getGamerTag()
+    {
+        return gamertagInput.getText();
     }
 
 

@@ -1,5 +1,6 @@
 package eu.flrkv.wwm.GUI;
 
+import eu.flrkv.wwm.Game.Game;
 import eu.flrkv.wwm.Storage.DatabaseConfiguration;
 import eu.flrkv.wwm.Storage.DatabaseConnection;
 import eu.flrkv.wwm.Utils.Utils;
@@ -8,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class GUIController implements ActionListener {
 
@@ -18,11 +21,19 @@ public class GUIController implements ActionListener {
     private CreateNewGame newGame;
     private About about;
     private QuestionList questionList;
-    AddNewQuestion addNewQuestion;
+    private AddNewQuestion addNewQuestion;
+    private GamesList saveGames;
+    private HighscoresList highscoresList;
+
+
+    // Ingame situation
+    private GameWindow gameWindow;
+    private Game game;
 
     public GUIController()
     {
         Utils.consoleLog("INFO", "GUIController was initialized successfully!");
+
     }
 
     /**
@@ -49,7 +60,7 @@ public class GUIController implements ActionListener {
      * @param pFrame Objekt des zu fokussierenden JFrame/Fenster
      * @return Gibt true zurück, wenn das Fenster erfolgreich fokussiert werden konnte.
      */
-    private static boolean focusFrame(FrameTemplate pFrame)
+    private static boolean focusFrame(JFrame pFrame)
     {
         // Prüfen ob das übergebene Fenster nicht null und nicht geschlossen ist.
         if (pFrame != null && pFrame.isDisplayable()) {
@@ -102,10 +113,100 @@ public class GUIController implements ActionListener {
                     addNewQuestion = new AddNewQuestion(this);
                 }
                 break;
+            case "CreateNewGame_start":
+                // Spiel erstellen & laden
+                loadGame(new Game(newGame.getGameName(), newGame.getGamerTag()));
+                // Fenster zur erstellung des Spiels schließen
+                newGame.dispose();
+                break;
+            case "MainMenu_saveGames":
+                if (!focusFrame(saveGames)) {
+                    saveGames = new GamesList(this);
+                }
+                break;
+            case "MainMenu_highscores":
+                if (!focusFrame(highscoresList)) {
+                    highscoresList = new HighscoresList(this);
+                }
+                break;
             default:
                 Utils.consoleLog("WARNING", "Could not assign performed Action to component!");
         }
     }
+
+    public void loadGame(Game g)
+    {
+        if (g == null) {
+            Utils.consoleLog("ERROR", "Critical error -> Game cannot be null!");
+            return;
+        }
+        this.game = g;
+        gameWindow = new GameWindow(this, this.game);
+        menu.setVisible(false);
+        setGameFrameListener();
+    }
+
+    /**
+     * Setzt die Listener für das Spielfenster
+     * Listener reagiert auf Fenster schließungen
+     */
+    private void setGameFrameListener()
+    {
+        gameWindow.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                exitToMainMenu();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                gameWindow = null;
+                game = null;
+                menu.setVisible(true);
+            }
+        });
+    }
+
+
+    /**
+     * Zeigt ein Dialogfenster um zurück zum Hauptmenü zu gelangen und das aktuelle Spiel zu beenden.
+     */
+    public void exitToMainMenu()
+    {
+        if (game != null && gameWindow != null) {
+
+            // Benutzerentscheidung
+            int select = JOptionPane.showConfirmDialog(gameWindow, "Möchten Sie Ihr aktuelles Spiel speichern?", "Wer wird Millionär | Zurück zum Hauptmenü", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+            // Spiel speichern
+            if (select == JOptionPane.YES_OPTION) {
+                if (!game.saveGame()) {
+                    if (JOptionPane.showConfirmDialog(gameWindow, "Das Spiel konnte nicht gespeichert werden! Ohne Speichern verlassen?", "Wer wird Millionär | Fehler", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) == JOptionPane.NO_OPTION) {
+                        return;
+                    }
+                }
+            }
+
+            // Doch weiter spielen
+            if (select == JOptionPane.CANCEL_OPTION) {
+                return;
+            }
+
+            // Fenster schließen
+            gameWindow.dispose();
+
+            // Aktuelles Spiel aus dem SPeicher entfernen
+            game = null;
+
+            // Zugehöriges Spielfenster aus dem Speicher entfernen
+            gameWindow = null;
+
+            // Hauptmenü anzeigen
+            menu.setVisible(true);
+        }
+    }
+
+
 
 
 }

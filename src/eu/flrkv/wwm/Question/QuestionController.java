@@ -1,6 +1,7 @@
-package eu.flrkv.wwm.Game;
+package eu.flrkv.wwm.Question;
 
 import eu.flrkv.wwm.Exceptions.QuestionNotFoundException;
+import eu.flrkv.wwm.Game.Game;
 import eu.flrkv.wwm.Storage.DatabaseConnection;
 import eu.flrkv.wwm.Utils.Utils;
 
@@ -8,13 +9,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class QuestionController {
 
     /**
      * Objekt des aktuellen Spiels
      */
-    private Game game;
+    private final Game game;
+
 
     /**
      * Kontruktor der Klasse QuestionController
@@ -26,22 +31,89 @@ public class QuestionController {
     }
 
     /**
-     * Holte eine neu noch nicht verwandte Frage aus der MySQL-Dtaenbanktabelle 'wwm_questions'
+     * Holt die ID's aller bereits benutzen Fragen für den Spielstand.
+     * @return Gibt die IDs (integer) als Array zurück.
+     */
+    public int[] getIDsOfUsedQuestions()
+    {
+        // Empty (Noch keine Frage genutzt)
+        if (game.getUsedQuestions() == null) {
+            return new int[]{};
+        }
+        String allIDS = game.getUsedQuestions();
+        String[] f = allIDS.split(",");
+
+        int[] i = new int[f.length];
+        for(int m = 0; m < f.length; m++) {
+            i[m] = Integer.parseInt(f[m]);
+        }
+        return i;
+    }
+
+    private boolean questionIsUsed(int pID)
+    {
+        int[] i = getIDsOfUsedQuestions();
+        return Arrays.stream(i).anyMatch(j -> j == pID);
+    }
+
+
+    private void setQuestionUsed(Question pQuestion)
+    {
+        if (game.getUsedQuestions() == null) {
+            game.setUsedQuestions(Integer.toString(pQuestion.getId()));
+            return;
+        }
+
+        String usedQuestions = game.getUsedQuestions();
+        game.setUsedQuestions(usedQuestions + "," + pQuestion.getId());
+    }
+
+    /**
+     * Holte eine neu noch nicht verwendete Frage aus der MySQL-Dtaenbanktabelle 'wwm_questions'
      * @param pDifficulty Schwierigkeitskategorie der Frage (0 -> Leicht, 1 -> Mittel, 2 -> Schwer)
      * @return Gibt die Frage als Objekt zurück.
      */
     public Question getNewQuestion(int pDifficulty)
     {
-        return null;
+        Question q = getRandomQuestion();
+        while (questionIsUsed(q.getId()) || q.getDifficulty() != pDifficulty) {
+            q = getRandomQuestion();
+        }
+
+        setQuestionUsed(q);
+        game.setCurrentQuestion(q);
+        return q;
     }
-
-
-
-
 
     /*
      * Static section
      */
+
+    public static String[] getMixedAnswerArray(Question pQuestion)
+    {
+        String[] answerArray = {pQuestion.getWrongAnswers()[0], pQuestion.getWrongAnswers()[1], pQuestion.getWrongAnswers()[2], pQuestion.getRightAnswer()};
+        List<String> answerList = Arrays.asList(answerArray);
+        Collections.shuffle(answerList);
+        answerList.toArray(answerArray);
+        return answerArray;
+    }
+
+    /**
+     * Gibt eine zufällige Frage zurück
+     * @return Frage in Form eines Objekts der Klasse Question
+     */
+    private static Question getRandomQuestion()
+    {
+        try {
+            ResultSet rs = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM wwm_questions ORDER BY RAND() LIMIT 1").executeQuery();
+            if (rs.next()) {
+                return new Question(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+            }
+        } catch (SQLException exception) {
+            Utils.consoleLog("ERROR", "Can not connect to the database!");
+        }
+        return null;
+    }
 
 
     /**
@@ -99,9 +171,8 @@ public class QuestionController {
             }
         } catch(SQLException e) {
             Utils.consoleLog("ERROR", "A Question with that ID could not be found!");
-            throw new QuestionNotFoundException("A Question with that ID could not be found!");
         }
-        return null;
+        throw new QuestionNotFoundException("A Question with that ID could not be found!");
     }
 
     public static boolean deleteQuestion(int pQuestionID) {

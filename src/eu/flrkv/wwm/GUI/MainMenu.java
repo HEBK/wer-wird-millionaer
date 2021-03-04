@@ -10,11 +10,12 @@ import java.awt.event.ActionListener;
 public class MainMenu extends FrameTemplate {
     private JPanel mainMenu;
     private JButton newGameButton;
-    private JButton spielLadenButton;
     private JButton exitGameButton;
     private JButton aboutButton;
     private JLabel wwmImage;
     private JButton questionListButton;
+    private JButton saveGamesButton;
+    private JButton highscoresButton;
 
     private GUIController myController;
 
@@ -29,6 +30,8 @@ public class MainMenu extends FrameTemplate {
         this.newGameButton.setName("MainMenu_newGame");
         this.aboutButton.setName("MainMenu_about");
         this.questionListButton.setName("MainMenu_questionList");
+        this.saveGamesButton.setName("MainMenu_saveGames");
+        this.highscoresButton.setName("MainMenu_highscores");
 
         // Minimum Size of the window
         this.setMinimumSize(new Dimension(700, 575));
@@ -59,11 +62,13 @@ public class MainMenu extends FrameTemplate {
         aboutButton.addActionListener(myController);
         newGameButton.addActionListener(myController);
         questionListButton.addActionListener(myController);
+        saveGamesButton.addActionListener(myController);
+        highscoresButton.addActionListener(myController);
 
     }
 
 
     private void createUIComponents() {
-        wwmImage = new JLabel(new ImageIcon("common/wwm_120x120.png"));
+        wwmImage = new JLabel(new ImageIcon("common/logos/wwm_120x120.png"));
     }
 }
