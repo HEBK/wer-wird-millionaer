@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `wwm_savedGames` (
     `questionNumber`        INT(2) NOT NULL,
     `currentQuestionID`     INT NULL DEFAULT NULL,
     `usedQuestions`         VARCHAR(255) COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-    `jokersLeft`            VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci,
+    `usedJokers`            VARCHAR(255) NULL DEFAULT NULL COLLATE utf8_unicode_ci,
 
     `createdAt`             TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `lastUpdate`            TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
