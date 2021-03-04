@@ -22,6 +22,8 @@ public class GUIController implements ActionListener {
     private About about;
     private QuestionList questionList;
     private AddNewQuestion addNewQuestion;
+    private GamesList saveGames;
+    private HighscoresList highscoresList;
 
 
     // Ingame situation
@@ -112,31 +114,55 @@ public class GUIController implements ActionListener {
                 }
                 break;
             case "CreateNewGame_start":
-                // Neues Spiel erstellen & Spielfenster dafür verwenden
-                game = new Game(newGame.getGameName(), newGame.getGamerTag());
-
-                // Neues Spielfenster
-                gameWindow = new GameWindow(this, game);
-
-                // Event bei Schließung des Spielfensters setzen
-                setWindowListener();
-                menu.setVisible(false);
+                // Spiel erstellen & laden
+                loadGame(new Game(newGame.getGameName(), newGame.getGamerTag()));
+                // Fenster zur erstellung des Spiels schließen
                 newGame.dispose();
+                break;
+            case "MainMenu_saveGames":
+                if (!focusFrame(saveGames)) {
+                    saveGames = new GamesList(this);
+                }
+                break;
+            case "MainMenu_highscores":
+                if (!focusFrame(highscoresList)) {
+                    highscoresList = new HighscoresList(this);
+                }
                 break;
             default:
                 Utils.consoleLog("WARNING", "Could not assign performed Action to component!");
         }
     }
 
+    public void loadGame(Game g)
+    {
+        if (g == null) {
+            Utils.consoleLog("ERROR", "Critical error -> Game cannot be null!");
+            return;
+        }
+        this.game = g;
+        gameWindow = new GameWindow(this, this.game);
+        menu.setVisible(false);
+        setGameFrameListener();
+    }
 
-
-
-    private void setWindowListener()
+    /**
+     * Setzt die Listener für das Spielfenster
+     * Listener reagiert auf Fenster schließungen
+     */
+    private void setGameFrameListener()
     {
         gameWindow.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 exitToMainMenu();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                gameWindow = null;
+                game = null;
+                menu.setVisible(true);
             }
         });
     }
