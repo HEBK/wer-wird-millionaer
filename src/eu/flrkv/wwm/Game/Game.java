@@ -3,6 +3,7 @@ package eu.flrkv.wwm.Game;
 import eu.flrkv.wwm.Exceptions.GameNotFoundException;
 import eu.flrkv.wwm.Utils.Utils;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Game {
@@ -30,7 +31,7 @@ public class Game {
     /**
      * Verbleibende Joker (phone,audience,fifty) Komma separiert.
      */
-    private String jokersLeft;
+    private String usedJokers;
 
     /**
      * Alle benutzten Fragen als String Komma separiert.
@@ -89,7 +90,7 @@ public class Game {
         HashMap<String, String> data = GameController.getGameData(this.gameID);
         if (data != null) {
             this.currentQuestionNumber = Integer.parseInt(data.get("questionNumber"));
-            this.jokersLeft = data.get("jokersLeft");
+            this.usedJokers = data.get("usedJokers");
         }
 
 
@@ -170,6 +171,37 @@ public class Game {
         this.currentQuestion = pQuestion;
     }
 
+
+    private String[] getUsedJokersArray()
+    {
+        if (this.usedJokers == null) {
+            return new String[]{};
+        }
+        return this.usedJokers.split(",");
+    }
+
+    public boolean jokerIsUsed(String pJoker)
+    {
+        if (this.usedJokers == null || this.usedJokers.isEmpty()) {
+            return false;
+        }
+        boolean bool = false;
+        for (String s: getUsedJokersArray()) {
+            if (s.equals(pJoker)) {
+                bool = true;
+            }
+        }
+        return bool;
+    }
+
+    public void useJoker(String pJoker)
+    {
+        if (this.usedJokers == null) {
+            this.usedJokers = pJoker;
+            return;
+        }
+        this.usedJokers = usedJokers + "," + pJoker;
+    }
 
     /**
      * Spiel verloren

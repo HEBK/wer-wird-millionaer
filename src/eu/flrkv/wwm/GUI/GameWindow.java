@@ -11,9 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
 
 public class GameWindow extends FrameTemplate {
@@ -117,9 +115,24 @@ public class GameWindow extends FrameTemplate {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
 
-                JOptionPane.showConfirmDialog(null, "Publikumsjoker gedrückt");
+                useAudienceJoker();
             }
         });
+        phoneJoker.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                usePhoneJoker();
+            }
+        });
+        fiftyFiftyJoker.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                useFiftyFiftyJoker();
+            }
+        });
+
     }
 
 
@@ -132,7 +145,6 @@ public class GameWindow extends FrameTemplate {
                 myController.exitToMainMenu();
             }
         });
-
 
         // Antwortenvalidierung
         ActionListener answerValidation = new ActionListener() {
@@ -160,6 +172,23 @@ public class GameWindow extends FrameTemplate {
         answerSet[3] = buttonAnswerD.getText().equals(currentGame.getCurrentQuestion().getRightAnswer());
     }
 
+
+    /**
+     * Array Position der richtigen Frage bekommen.
+     * @return Gibt die Position der Richtigen Antwort zurück
+     */
+    private Integer getRightAnswerID()
+    {
+        for (int j=0; j < answerSet.length; j++){
+            if(answerSet[j]) return j;
+        }
+        return null;
+    }
+
+    /**
+     * Spielfenster "bauen"
+     * Elemente für die aktuelle Frage und Punktestand setzen
+     */
     private void buildGameWindow()
     {
         // Geldbetrag für die aktuelle Frage setzen
@@ -173,6 +202,13 @@ public class GameWindow extends FrameTemplate {
         Question q = currentGame.getCurrentQuestion();
         String[] answers = QuestionController.getMixedAnswerArray(q);
 
+        // Buttons ggf. wieder aktivieren
+        buttonAnswerA.setEnabled(true);
+        buttonAnswerB.setEnabled(true);
+        buttonAnswerC.setEnabled(true);
+        buttonAnswerD.setEnabled(true);
+
+        // Antworten setzen
         answerButtons[0].setText(answers[0]);
         answerButtons[1].setText(answers[1]);
         answerButtons[2].setText(answers[2]);
@@ -180,23 +216,72 @@ public class GameWindow extends FrameTemplate {
 
         setRigthInAnswerSet();
         System.out.println(Arrays.toString(answerSet));
+
+
     }
 
 
 
     private void useFiftyFiftyJoker()
     {
+        if (currentGame.jokerIsUsed("fifty")) {
+            JOptionPane.showMessageDialog(this, "DIeser Joker wurde bereits eingesetzt!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (JOptionPane.showConfirmDialog(this, "Möchten Sie den Fünfzig-Fünfzig-Joker einsetzen?", "Wer wird Millionär | Joker", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            int rightAnswer = getRightAnswerID();
 
+            Random r = new Random();
+            int rINT;
+
+            int buttonsDisabled = 0;
+            int replace = 54;
+            while (buttonsDisabled < 2) {
+                rINT = r.nextInt(4);
+                while (rINT == rightAnswer || rINT == replace) {
+                    rINT = r.nextInt(4);
+                }
+                answerButtons[rINT].setEnabled(false);
+                System.out.println(answerButtons[rINT].getText());
+                replace = rINT;
+                buttonsDisabled++;
+            }
+            currentGame.useJoker("fifty");
+        }
     }
 
     private void usePhoneJoker()
     {
-
+        if (currentGame.jokerIsUsed("phone")) {
+            JOptionPane.showMessageDialog(this, "DIeser Joker wurde bereits eingesetzt!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (JOptionPane.showConfirmDialog(this, "Möchten Sie den Telefon-Joker einsetzen?", "Wer wird Millionär | Joker", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            int rightAnswer = getRightAnswerID();
+            char propablyAnswer;
+            Random r = new Random();
+            if (r.nextInt(101) <= 60) {
+                System.out.println(rightAnswer);
+                propablyAnswer = Utils.buttonNoToChar(rightAnswer);
+            } else {
+                int wrong = r.nextInt(3);
+                while (wrong == rightAnswer) {
+                    wrong = r.nextInt(4);
+                }
+                propablyAnswer = Utils.buttonNoToChar(wrong);
+            }
+            JOptionPane.showMessageDialog(this, "Ich denke es ist Antwort " + propablyAnswer + ")", "Wer wird Millionär | Joker", JOptionPane.INFORMATION_MESSAGE);
+            currentGame.useJoker("phone");
+        }
     }
 
     private void useAudienceJoker()
     {
+        if (JOptionPane.showConfirmDialog(this, "Möchten Sie den Publikums-Joker einsetzen?", "Wer wird Millionär | Joker", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            int rightAnswer = getRightAnswerID();
 
+
+        }
     }
 
 

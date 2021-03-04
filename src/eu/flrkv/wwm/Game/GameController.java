@@ -51,7 +51,7 @@ public class GameController {
                 ret.put("questionNumber", rs.getString("questionNumber"));
                 ret.put("currentQuestionID", rs.getString("questionNumber"));
                 ret.put("usedQuestions", rs.getString("usedQuestions"));
-                ret.put("jokersLeft", rs.getString("jokersLeft"));
+                ret.put("usedJokers", rs.getString("usedJokers"));
                 ret.put("createdAt", rs.getString("createdAt"));
                 return ret;
             }
@@ -70,11 +70,10 @@ public class GameController {
     public static boolean createGame(String pGamerTag, String pGameName)
     {
         try {
-            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("INSERT INTO wwm_savedGames (gameName, gamerTag, questionNumber, jokersLeft) VALUES (?, ?, ?, ?)");
+            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("INSERT INTO wwm_savedGames (gameName, gamerTag, questionNumber) VALUES (?, ?, ?)");
             ps.setString(1, pGameName);
             ps.setString(2, pGamerTag);
             ps.setInt(3, 1);
-            ps.setString(4, "phone,audience,fifty");
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {

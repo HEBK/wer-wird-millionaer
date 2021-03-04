@@ -17,7 +17,7 @@ public class QuestionController {
     /**
      * Objekt des aktuellen Spiels
      */
-    private Game game;
+    private final Game game;
 
 
     /**
