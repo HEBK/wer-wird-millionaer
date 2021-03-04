@@ -1,9 +1,14 @@
 package eu.flrkv.wwm.Game;
 
 import eu.flrkv.wwm.Exceptions.GameNotFoundException;
+import eu.flrkv.wwm.Exceptions.QuestionNotFoundException;
+import eu.flrkv.wwm.Highscore.HighscoreController;
+import eu.flrkv.wwm.Question.Question;
+import eu.flrkv.wwm.Question.QuestionController;
 import eu.flrkv.wwm.Utils.Utils;
 
-import java.util.Arrays;
+import javax.swing.*;
+import java.time.Year;
 import java.util.HashMap;
 
 public class Game {
@@ -60,6 +65,28 @@ public class Game {
      */
     public Game(int pGameID) throws GameNotFoundException
     {
+        if (!GameController.gameExists(pGameID)) {
+            Utils.consoleLog("ERROR", "Game not found!");
+            throw new GameNotFoundException("The Game with the ID '"+pGameID+"' could not be found!");
+        }
+
+        this.gameID = pGameID;
+        HashMap<String, String> data = GameController.getGameData(this.gameID);
+        if (data != null) {
+            this.currentQuestionNumber = Integer.parseInt(data.get("questionNumber"));
+            this.currentQuestionID = Integer.parseInt(data.get("currentQuestionID"));
+            this.usedJokers = data.get("usedJokers");
+            this.usedQuestions = data.get("usedQuestions");
+            this.gamerTag = data.get("gamerTag");
+            this.gameName = data.get("gameName");
+
+            try {
+                setQuestion(QuestionController.getQuestion(currentQuestionID), currentQuestionNumber);
+            } catch (QuestionNotFoundException e) {
+                JOptionPane.showMessageDialog(null, "Dieser Spielstand ist beschädigt, da die aktuelle Frage aus dem Spiel entfernt wurde!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
+
+            }
+        }
 
     }
 
@@ -94,7 +121,24 @@ public class Game {
         }
 
 
+        // Set Question
+        nextQuestion(true);
     }
+
+
+    public void nextQuestion(boolean pFirst)
+    {
+        if (!pFirst) this.currentQuestionNumber = currentQuestionNumber+1;
+        this.currentQuestion = questionController.getNewQuestion(Utils.getQuestionDifficulty(currentQuestionNumber));
+        this.currentQuestionID = currentQuestion.getId();
+    }
+
+    private void setQuestion(Question pQuestion, int pQuestionNumber)
+    {
+        this.currentQuestion = pQuestion;
+        this.currentQuestionNumber = pQuestionNumber;
+    }
+
 
 
     /**
@@ -172,7 +216,7 @@ public class Game {
     }
 
 
-    private String[] getUsedJokersArray()
+    public String[] getUsedJokersArray()
     {
         if (this.usedJokers == null) {
             return new String[]{};
@@ -208,10 +252,26 @@ public class Game {
      */
     public void lost()
     {
+        int select = JOptionPane.showConfirmDialog(null, "Du leider falsch geantwortet!\n\nDein erspielter Betrag:  "+Utils.getSecurityLevelMoneyAmount(currentQuestionNumber-1)+"\n\nSoll dein Spielstand in die Bestenliste aufgenommen werden?", "Wer wird Millionär | Falsche Antwort", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        if (select == JOptionPane.YES_OPTION) {
+            if (!addToHighscores(true)) {
+                JOptionPane.showMessageDialog(null, "Fehler beim Speichern des Highscores!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        deleteGame();
+    }
 
+    public boolean addToHighscores(boolean pBackToSecurityLevel)
+    {
+        return HighscoreController.addHighscore(gamerTag, gameName, pBackToSecurityLevel ? Utils.getLastSecurityLevel(currentQuestionNumber-1) : currentQuestionNumber-1, getUsedJokersArray().length);
+    }
+
+    public boolean deleteGame()
+    {
+        return GameController.deleteGame(this.gameID);
     }
 
     public boolean saveGame() {
-        return false;
+        return GameController.updateGame(this.getGameID(), this.getCurrentQuestionNumber(), this.getCurrentQuestion().getId(), this.usedQuestions, this.usedJokers);
     }
 }

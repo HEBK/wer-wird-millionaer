@@ -1,8 +1,9 @@
 package eu.flrkv.wwm.GUI;
 
 import eu.flrkv.wwm.Game.Game;
-import eu.flrkv.wwm.Game.Question;
-import eu.flrkv.wwm.Game.QuestionController;
+import eu.flrkv.wwm.Question.Question;
+import eu.flrkv.wwm.Question.QuestionController;
+import eu.flrkv.wwm.Highscore.HighscoreController;
 import eu.flrkv.wwm.Utils.Utils;
 
 import javax.swing.*;
@@ -11,8 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 import java.util.*;
-import java.util.List;
 
 public class GameWindow extends FrameTemplate {
 
@@ -43,6 +44,8 @@ public class GameWindow extends FrameTemplate {
 
     // Label that displays the current amount question
     private JLabel currentQuestionMoneyAmount;
+    private JButton takeMoneyExitButton;
+    private JButton saveGameButton;
 
 
     /**
@@ -62,7 +65,7 @@ public class GameWindow extends FrameTemplate {
      * @param pGame ZU verwendendes Spiel
      */
     public GameWindow(GUIController pController, Game pGame) {
-        super("Wer wird Millionär | InGame - @", new Dimension(1300, 700));
+        super("Wer wird Millionär | InGame - @", new Dimension(1300, 800));
 
         // Attribute setzen
         myController = pController;
@@ -80,8 +83,6 @@ public class GameWindow extends FrameTemplate {
         setFrameTitle(currentGame.getGamerTag(), currentGame.getGameName(), currentGame.getGameID());
 
         this.add(panel1);
-        autoResizeFrame();
-
 
         buildGameWindow();
     }
@@ -90,6 +91,7 @@ public class GameWindow extends FrameTemplate {
     {
         this.setVisible(true);
         this.setDefaultCloseOperation(FrameTemplate.DO_NOTHING_ON_CLOSE);
+        this.setMinimumSize(new Dimension(1300, 800));
 
 
         answerButtons[0] = buttonAnswerA;
@@ -146,15 +148,66 @@ public class GameWindow extends FrameTemplate {
             }
         });
 
+        // Spiel speichern
+        saveGameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (currentGame.saveGame()) {
+                    JOptionPane.showMessageDialog(null, "Spiel erfolgreich gespeichert!", "Wer wird Millionär | Spiel gespeichert", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Das Spiel konnte nicht gespeichert werden!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
+
+                }
+            }
+        });
+
+        // Mit bestimmter Geldsumme das Spiel verlassen
+        takeMoneyExitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int confirmExit = JOptionPane.showConfirmDialog(null, "Sind Sie sicher, dass Sie das Spiel mit "+Utils.getQuestionMoneyAmount(currentGame.getCurrentQuestionNumber()-1) + " verlassen möchten?", "Wer wird Millionär | Spiel verlassen", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (confirmExit == JOptionPane.YES_OPTION) {
+                    JOptionPane.showMessageDialog(null, "Herzlichen Glückwunsch! Sie haben " + Utils.getQuestionMoneyAmount(currentGame.getCurrentQuestionNumber()-1) + " erspielt!", "Wer wird Millionär | Spiel verlassen", JOptionPane.INFORMATION_MESSAGE);
+                    int bestlistSelect = JOptionPane.showConfirmDialog(null, "Soll dieser Spielstand in die Bestenliste aufgenommen werden?", "Wer wird Millionär | Bestenliste", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+                    if (bestlistSelect == JOptionPane.YES_OPTION) {
+                        if (!currentGame.addToHighscores(false)) {
+                            JOptionPane.showMessageDialog(null, "Fehler beim Speichern des Highscores!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    }
+                    if (currentGame.deleteGame()) {
+                        dispose();
+                    }
+                }
+            }
+        });
+
         // Antwortenvalidierung
         ActionListener answerValidation = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JButton b = (JButton) e.getSource();
                 if (b.getText().equals(currentGame.getCurrentQuestion().getRightAnswer())) {
-                    System.out.println("Right Answer!");
+
+                    if (currentGame.getCurrentQuestionNumber() < 15) {
+                        JOptionPane.showMessageDialog(null, "Richtige Antwort!\n\nWeiter geht's mit Frage " + (currentGame.getCurrentQuestionNumber()+1), "Wer wird Millionär | Richtige Antwort!", JOptionPane.INFORMATION_MESSAGE);
+                        currentGame.nextQuestion(false);
+                        buildGameWindow();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Du hast die eine Millionen geknackt!", "Wer wird Millionär | 1 Million!", JOptionPane.INFORMATION_MESSAGE);
+                        if (JOptionPane.showConfirmDialog(null, "Soll dieser Spielstand in die Bestenliste aufgenommen werden?", "Wer wird Millionär | Bestenliste", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                            if (!currentGame.addToHighscores(false)) {
+                                JOptionPane.showMessageDialog(null, "Fehler beim Speichern des Highscores!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                        currentGame.deleteGame();
+                        dispose();
+                    }
                 } else {
+                    // Spiel verloren
                     currentGame.lost();
+                    dispose();
                 }
             }
         };
@@ -194,9 +247,8 @@ public class GameWindow extends FrameTemplate {
         // Geldbetrag für die aktuelle Frage setzen
         currentQuestionMoneyAmount.setText(Utils.getQuestionMoneyAmount(currentGame.getCurrentQuestionNumber()));
 
-        // Frage setzen -> Neue Frage erhalten => Mit bestimmter Schwierigkeit
-        currentGame.setCurrentQuestion(currentGame.getQuestionController().getNewQuestion(Utils.getQuestionDifficulty(currentGame.getCurrentQuestionNumber())));
-        questionLabel.setText(currentGame.getCurrentQuestion().getQuestion());                      // Label für die Frage überschreiben
+        // Label für die Frage überschreiben
+        questionLabel.setText(currentGame.getCurrentQuestion().getQuestion());
 
         // Antworten mischen
         Question q = currentGame.getCurrentQuestion();
@@ -216,19 +268,24 @@ public class GameWindow extends FrameTemplate {
 
         setRigthInAnswerSet();
         System.out.println(Arrays.toString(answerSet));
-
-
     }
 
 
-
+    /**
+     * Fifty-Fifty Joker
+     * Deaktiviert zwei Buttons mit falschen Antworten
+     */
     private void useFiftyFiftyJoker()
     {
         if (currentGame.jokerIsUsed("fifty")) {
-            JOptionPane.showMessageDialog(this, "DIeser Joker wurde bereits eingesetzt!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Dieser Joker wurde bereits eingesetzt!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (JOptionPane.showConfirmDialog(this, "Möchten Sie den Fünfzig-Fünfzig-Joker einsetzen?", "Wer wird Millionär | Joker", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            if (getRightAnswerID() == null) {
+                Utils.unknownErrorPopup();
+                return;
+            }
             int rightAnswer = getRightAnswerID();
 
             Random r = new Random();
@@ -250,13 +307,21 @@ public class GameWindow extends FrameTemplate {
         }
     }
 
+    /**
+     * Telefon-Joker
+     * Gibt zu 60% die richtige Antwort als Dialogfenster wieder
+     */
     private void usePhoneJoker()
     {
         if (currentGame.jokerIsUsed("phone")) {
-            JOptionPane.showMessageDialog(this, "DIeser Joker wurde bereits eingesetzt!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Dieser Joker wurde bereits eingesetzt!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (JOptionPane.showConfirmDialog(this, "Möchten Sie den Telefon-Joker einsetzen?", "Wer wird Millionär | Joker", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            if (getRightAnswerID() == null) {
+                Utils.unknownErrorPopup();
+                return;
+            }
             int rightAnswer = getRightAnswerID();
             char propablyAnswer;
             Random r = new Random();
@@ -275,12 +340,43 @@ public class GameWindow extends FrameTemplate {
         }
     }
 
-    private void useAudienceJoker()
-    {
+
+
+    private void useAudienceJoker() {
+        if (currentGame.jokerIsUsed("audience")) {
+            JOptionPane.showMessageDialog(this, "Dieser Joker wurde bereits eingesetzt!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (JOptionPane.showConfirmDialog(this, "Möchten Sie den Publikums-Joker einsetzen?", "Wer wird Millionär | Joker", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-            int rightAnswer = getRightAnswerID();
+            if (getRightAnswerID() == null) {
+                Utils.unknownErrorPopup();
+                return;
+            }
 
 
+            Random r = new Random();
+            int[] sortedArray = {
+                    Utils.getRandomNumber(1000, 750),
+                    Utils.getRandomNumber(750, 500),
+                    Utils.getRandomNumber(500, 250),
+                    Utils.getRandomNumber(250, 0)
+            };
+            double[] percentVals = new double[4];
+
+            // 66% Chance
+            if (r.nextInt(3) > 0) {
+                ArrayList<Integer> used = new ArrayList<Integer>();
+                percentVals[getRightAnswerID()] = sortedArray[0];
+                used.add(getRightAnswerID());
+
+
+            }
+
+
+
+            currentGame.useJoker("audience");
+            DecimalFormat df = new DecimalFormat("#0.00");
+            JOptionPane.showMessageDialog(this, "Ergebnisse der Publikumsbefragung:\n\nA) "+df.format(Utils.calcPercent(percentVals[0], Utils.sumUpArrayVals(sortedArray)))+" %\nB) "+df.format(Utils.calcPercent(percentVals[1], Utils.sumUpArrayVals(sortedArray)))+" %\nC) "+df.format(Utils.calcPercent(percentVals[2], Utils.sumUpArrayVals(sortedArray)))+" %\nD) "+df.format(Utils.calcPercent(percentVals[3], Utils.sumUpArrayVals(sortedArray))) + " %");
         }
     }
 
