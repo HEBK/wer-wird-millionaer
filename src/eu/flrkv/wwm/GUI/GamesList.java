@@ -3,8 +3,6 @@ package eu.flrkv.wwm.GUI;
 import eu.flrkv.wwm.Exceptions.GameNotFoundException;
 import eu.flrkv.wwm.Game.Game;
 import eu.flrkv.wwm.Game.GameController;
-import eu.flrkv.wwm.Question.Question;
-import eu.flrkv.wwm.Question.QuestionController;
 import eu.flrkv.wwm.Utils.Utils;
 
 import javax.swing.*;

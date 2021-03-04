@@ -8,7 +8,6 @@ import eu.flrkv.wwm.Question.QuestionController;
 import eu.flrkv.wwm.Utils.Utils;
 
 import javax.swing.*;
-import java.time.Year;
 import java.util.HashMap;
 
 public class Game {

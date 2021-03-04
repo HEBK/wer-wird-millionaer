@@ -3,7 +3,6 @@ package eu.flrkv.wwm.GUI;
 import eu.flrkv.wwm.Game.Game;
 import eu.flrkv.wwm.Question.Question;
 import eu.flrkv.wwm.Question.QuestionController;
-import eu.flrkv.wwm.Highscore.HighscoreController;
 import eu.flrkv.wwm.Utils.Utils;
 
 import javax.swing.*;

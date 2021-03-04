@@ -1,6 +1,5 @@
 package eu.flrkv.wwm.GUI;
 
-import eu.flrkv.wwm.Game.GameController;
 import eu.flrkv.wwm.Highscore.HighscoreController;
 import eu.flrkv.wwm.Utils.Utils;
 

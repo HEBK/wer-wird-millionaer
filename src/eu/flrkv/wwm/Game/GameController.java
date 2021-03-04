@@ -1,11 +1,8 @@
 package eu.flrkv.wwm.Game;
 
-import eu.flrkv.wwm.Question.Question;
 import eu.flrkv.wwm.Storage.DatabaseConnection;
 import eu.flrkv.wwm.Utils.Utils;
-import org.apache.ibatis.jdbc.SQL;
 
-import javax.xml.crypto.Data;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

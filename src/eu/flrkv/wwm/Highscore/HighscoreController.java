@@ -3,8 +3,6 @@ package eu.flrkv.wwm.Highscore;
 import eu.flrkv.wwm.Storage.DatabaseConnection;
 import eu.flrkv.wwm.Utils.Utils;
 
-import javax.xml.crypto.Data;
-import javax.xml.transform.Result;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
