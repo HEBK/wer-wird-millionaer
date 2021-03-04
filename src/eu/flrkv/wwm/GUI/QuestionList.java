@@ -1,7 +1,7 @@
 package eu.flrkv.wwm.GUI;
 
-import eu.flrkv.wwm.Game.Question;
-import eu.flrkv.wwm.Game.QuestionController;
+import eu.flrkv.wwm.Question.Question;
+import eu.flrkv.wwm.Question.QuestionController;
 import eu.flrkv.wwm.Utils.Utils;
 
 import javax.swing.*;

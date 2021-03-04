@@ -1,6 +1,7 @@
-package eu.flrkv.wwm.Game;
+package eu.flrkv.wwm.Question;
 
 import eu.flrkv.wwm.Exceptions.QuestionNotFoundException;
+import eu.flrkv.wwm.Game.Game;
 import eu.flrkv.wwm.Storage.DatabaseConnection;
 import eu.flrkv.wwm.Utils.Utils;
 
@@ -170,9 +171,8 @@ public class QuestionController {
             }
         } catch(SQLException e) {
             Utils.consoleLog("ERROR", "A Question with that ID could not be found!");
-            throw new QuestionNotFoundException("A Question with that ID could not be found!");
         }
-        return null;
+        throw new QuestionNotFoundException("A Question with that ID could not be found!");
     }
 
     public static boolean deleteQuestion(int pQuestionID) {

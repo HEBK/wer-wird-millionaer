@@ -1,4 +1,4 @@
-package eu.flrkv.wwm.Game;
+package eu.flrkv.wwm.Question;
 
 public class Question {
 
