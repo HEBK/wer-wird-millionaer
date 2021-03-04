@@ -1,3 +1,7 @@
+# noinspection SqlNoDataSourceInspectionForFile
+
+# noinspection SqlNoDataSourceInspection
+
 CREATE TABLE IF NOT EXISTS `wwm_questions` (
 
     `ID`                INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -23,18 +27,21 @@ CREATE TABLE IF NOT EXISTS `wwm_savedGames` (
     `usedJokers`            VARCHAR(255) NULL DEFAULT NULL COLLATE utf8_unicode_ci,
 
     `createdAt`             TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `lastUpdate`            TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+    `lastUpdate`            TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 
 ) engine=innodb DEFAULT charset=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `wwm_highscores` (
 
     `ID`                    INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `gamerTag`              VARCHAR(16) NOT NULL COLLATE utf8_unicode_ci,
-    `questionCount`         INT(2) NOT NULL,
-    `jokersLeft`            INT(1) NOT NULL
+    `gamerTag`              VARCHAR(50) NOT NULL COLLATE utf8_unicode_ci,
+    `gameName`              VARCHAR(20) NOT NULL COLLATE utf8_unicode_ci,
+    `solvedQuestions`       INT(2) NOT NULL,
+    `usedJokersCount`       INT(1) NOT NULL
 
 ) engine=innodb DEFAULT charset=utf8 COLLATE=utf8_unicode_ci;
+
+
 
 
 INSERT INTO `wwm_questions` (difficulty, question, answer0, answer1, answer2, answer3) VALUES
@@ -83,10 +90,11 @@ INSERT INTO `wwm_questions` (difficulty, question, answer0, answer1, answer2, an
     (2, 'Womit sind viele Schneidebretter ausgestattet?', 'Wassergrube', 'Bierfurche', 'Weinkerbe', 'Saftrille'),
     (2, 'Welchem Motto hat sich der als "Upcycling" populär gewordene Trend verschrieben?', 'klein, aber oho', 'ohne Moos nix los', 'wer rastet, der rostet', 'aus Alt mach Neu'),
     (2, 'Welches deutsche KFZ-Kennzeichenkürzel steht nicht für die einwohnerreichste deutsche Stadt, deren Name mit diesem Buchstaben beginnt?', 'K', 'S', 'D', 'H'),
+    (2, 'In welchem Staat ist Queen Elisabeth II. nicht das Staatsoberhaupt?', 'Jamaika', 'Kanada', 'Australien', 'Costa Rica'),
 
     -- Schwere Fragen
     (3, 'Wo befinden sich einige der höchsten Alpengipfel?', 'Monte-Purpur-Höhenzug', 'Monte-Lila-Gebirge', 'Monte-Magenta-Kette', 'Monte-Rosa-Massiv'),
-    (3, 'Was ist die durchschnittliche Oberflächentemperatur auf der Venus?', '215 °C', '615 °C', '395 °C', '460 ° C'),
+    (3, 'Was ist die durchschnittliche Oberflächentemperatur auf der Venus?', '215 °C', '615 °C', '395 °C', '460 °C'),
     (3, 'Wie viel Prozent der Masse des Sonnensystems befindet sich in der Sonne auf 1 Prozent genau?', '96 %', ' 89 %', '85 %', '99 %'),
     (3, 'Wo wurde der Schriftsteller geboren, der für den Roman „Herkunft“ 2019 mit dem Deutschen Buchpreis ausgezeichnet wurde?', 'Rhodesien', 'Ceylon', 'Tibet', 'Jugoslawien'),
     (3, 'Was war hierzulande bis in die 1950er noch gang und gäbe?', 'Beamtinnenkommunion', 'Krankenschwesterkollekte', 'Sekretärinnenbeichte', 'Lehrerinnenzöllibat'),
