@@ -2,6 +2,7 @@ package eu.flrkv.wwm.Highscore;
 
 import eu.flrkv.wwm.Storage.DatabaseConnection;
 import eu.flrkv.wwm.Utils.Utils;
+import org.apache.ibatis.jdbc.SQL;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -52,6 +53,18 @@ public class HighscoreController {
             //
         }
         return highscores;
+    }
+
+    public static boolean deleteHighscore(int pID)
+    {
+        try {
+            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("DELETE FROM wwm_highscores WHERE ID = ?");
+            ps.setInt(1, pID);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            Utils.consoleLog("ERROR", "Failed to connect to the database!");
+        }
+        return false;
     }
 
 

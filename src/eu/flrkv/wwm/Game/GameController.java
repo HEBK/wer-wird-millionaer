@@ -9,8 +9,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GameController {
 
+/**
+ * Klasse zur Verwaltung von Spielständen
+ */
+public class GameController {
 
     /**
      * Gibt die aktuellste GameID zurück.
@@ -31,6 +34,11 @@ public class GameController {
         return null;
     }
 
+    /**
+     * Löscht ein Spiel/Spielstand
+     * @param pID ID des zu löschenden Spielstands
+     * @return Gibt true zurück wenn der Spielstand erfolgreich gelöscht wurde
+     */
     public static boolean deleteGame(int pID)
     {
         try {
@@ -43,6 +51,11 @@ public class GameController {
         return false;
     }
 
+    /**
+     * Gibt die Daten eines Spielstands in Form einer HashMap zurück
+     * @param pID ID des Spielstands
+     * @return Gibt die HashMap mit den Daten zurück falls das Spiel existiert. Wenn nicht wird null zurückgegeben.
+     */
     public static HashMap<String, String> getGameData(int pID)
     {
         try {
@@ -108,6 +121,15 @@ public class GameController {
         return false;
     }
 
+    /**
+     * Aktualisiert ein Spiel / einen Spielstand
+     * @param pGameID ID des Spielstandes
+     * @param questionNumber Fragen-Nummer
+     * @param currentQuestionID ID der aktuellen Frage
+     * @param usedQuestions Komma-Separierter String welcher alle benutzten FragenIDs enthält
+     * @param usedJokers Komma-Separierter String welcher alle benutzten Joker enthält
+     * @return Falls das Spiel existiert und der Spielstand überschrieben wurde wird true zurückgegeben. Andernfalls wird false zurückgegeben.
+     */
     public static boolean updateGame(int pGameID, int questionNumber, int currentQuestionID, String usedQuestions, String usedJokers)
     {
         try {
@@ -126,6 +148,10 @@ public class GameController {
         return false;
     }
 
+    /**
+     * Gibt die Daten aller Spielstände in einer ArrayList zurück.
+     * @return ArrayList mit den Daten der Spielstände. Falls kein Spielstand existiert wird eine leere ArrayList zurückgegeben.
+     */
     public static ArrayList<HashMap<String, String>> getAllSaveGames()
     {
         ArrayList<HashMap<String, String>> games = new ArrayList<>();
@@ -153,8 +179,4 @@ public class GameController {
         }
         return games;
     }
-
-
-
-
 }

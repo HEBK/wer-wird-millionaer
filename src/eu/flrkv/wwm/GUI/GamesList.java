@@ -13,13 +13,20 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Fenster zum Verwalten der Spielst&auml;nde (Spielstandverwaltung)
+ */
 public class GamesList extends FrameTemplate {
+
+
     private JPanel gamesListPanel;
     private JLabel logoImage;
+
     private JButton deleteGameButton;
-    private JLabel saveGameCountLabel;
     private JButton loadGameButton;
     private JButton closeButton;
+
+    private JLabel saveGameCountLabel;
 
     // GUIController
     GUIController myController;
@@ -102,7 +109,13 @@ public class GamesList extends FrameTemplate {
         String[][] data = getTableData();
 
         // Neues Tabellenmodell erstellen & Tabelle anhand des Modells erstellen -> Tabelle zum Scrollpanel hinzufügen
-        saveGameTableModel = new DefaultTableModel(data, columnNames);
+        saveGameTableModel = new DefaultTableModel(data, columnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column)
+            {
+                return false;
+            }
+        };
         saveGameTable = new JTable(saveGameTableModel);
         tableScrollPane = new JScrollPane(saveGameTable);
 
@@ -111,6 +124,9 @@ public class GamesList extends FrameTemplate {
 
         // Zeilenhöhe setzen
         saveGameTable.setRowHeight(25);
+
+        // Nur eine Zeile makierbar
+        saveGameTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         // Spaltenbreite
         saveGameTable.getColumnModel().getColumn(0).setPreferredWidth(25);
