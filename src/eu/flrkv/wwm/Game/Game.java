@@ -276,7 +276,7 @@ public class Game {
      */
     public void lost()
     {
-        int select = JOptionPane.showConfirmDialog(null, "Du leider falsch geantwortet!\n\nDein erspielter Betrag:  "+Utils.getSecurityLevelMoneyAmount(currentQuestionNumber-1)+"\n\nSoll dein Spielstand in die Bestenliste aufgenommen werden?", "Wer wird Millionär | Falsche Antwort", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        int select = JOptionPane.showConfirmDialog(null, "Du leider falsch geantwortet!\n\nRichtige Antwort: "+currentQuestion.getRightAnswer()+"\nDein erspielter Betrag:  "+Utils.getSecurityLevelMoneyAmount(currentQuestionNumber-1)+"\n\nSoll dein Spielstand in die Bestenliste aufgenommen werden?", "Wer wird Millionär | Falsche Antwort", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
         if (select == JOptionPane.YES_OPTION) {
             if (!addToHighscores(true)) {
                 JOptionPane.showMessageDialog(null, "Fehler beim Speichern des Highscores!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
