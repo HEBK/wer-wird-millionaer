@@ -201,6 +201,7 @@ public class HighscoresList extends FrameTemplate {
                         if (HighscoreController.deleteHighscore(entryID)) {
                             JOptionPane.showMessageDialog(null, "Der Eintrag wurde erfolgreich gelöscht!", "Wer wird Millionär | Eintrag gelöscht!", JOptionPane.INFORMATION_MESSAGE);
                             highscoresTableModel.removeRow(selectedRow);
+                            setEntryCountLabel(highscoresTable.getRowCount());
                         } else {
                             JOptionPane.showMessageDialog(null, "Beim Löschen des Eintrags trat ein Fehler auf!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
                         }
