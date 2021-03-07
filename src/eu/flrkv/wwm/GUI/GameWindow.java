@@ -251,6 +251,9 @@ public class GameWindow extends FrameTemplate {
      */
     private void buildGameWindow()
     {
+        // Focus auf label
+        questionLabel.requestFocus();
+
         // Geldbetrag für die aktuelle Frage setzen
         currentQuestionMoneyAmount.setText(Utils.getQuestionMoneyAmount(currentGame.getCurrentQuestionNumber()));
 
@@ -350,7 +353,10 @@ public class GameWindow extends FrameTemplate {
     }
 
 
-
+    /**
+     * Publikums-Joker
+     * Gibt zu 70% die richtige Antwort als Publikumsbefragung im Dialogfenster wieder
+     */
     private void useAudienceJoker() {
 
 
