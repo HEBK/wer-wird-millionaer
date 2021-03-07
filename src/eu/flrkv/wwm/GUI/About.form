@@ -45,7 +45,7 @@
             </constraints>
             <properties>
               <font name="Arial" size="16" style="1"/>
-              <text value="Wer wird Millionär - v0.0.7"/>
+              <text value="Wer wird Millionär - v0.1.0"/>
             </properties>
           </component>
         </children>
