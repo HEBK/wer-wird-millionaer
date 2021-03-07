@@ -93,6 +93,8 @@ INSERT INTO `wwm_questions` (difficulty, question, answer0, answer1, answer2, an
     (2, 'Welches deutsche KFZ-Kennzeichenkürzel steht nicht für die einwohnerreichste deutsche Stadt, deren Name mit diesem Buchstaben beginnt?', 'K', 'S', 'D', 'H'),
     (2, 'In welchem Staat ist Queen Elisabeth II. nicht das Staatsoberhaupt?', 'Jamaika', 'Kanada', 'Australien', 'Costa Rica'),
     (2, 'Wie lauten die ersten 7 Nachkommstellen von π?', '2,7182818', '3,0425925', '3,1515821', '3,1415926'),
+    (2, 'Wann wurde das Hermann-Emanuel-Berufskolleg gegründet?', '1904', '1917', '1899', '1909'),
+    (2, 'Wann endete das Zeitalter der Antike?', '400 n. Christi', '700 n. Christi', '550 n. Christi', '600 n. Christi'),
 
     -- Schwere Fragen
     (3, 'Wo befinden sich einige der höchsten Alpengipfel?', 'Monte-Purpur-Höhenzug', 'Monte-Lila-Gebirge', 'Monte-Magenta-Kette', 'Monte-Rosa-Massiv'),
@@ -111,5 +113,6 @@ INSERT INTO `wwm_questions` (difficulty, question, answer0, answer1, answer2, an
     (3, 'Welcher Schauspieler verkörperte im Jahr 1965 James Bond?', 'Timothy Dalton', 'Roger Moore', 'Pierce Brosnan', 'Sean Connery'),
     (3, 'Wie viele Jahre dauert es in etwa bis der Jupiter die Sonne umrundet hat?', '24 Jahre', '16 Jahre', '20 Jahre', '12 Jahre'),
     (3, 'Wie lauten die ersten 4 Nachkommastellen der Eulerschen Zahl e?', '2,8621', '2,5171', '3,1415', '2,7182'),
+    (3, 'Wie weit ist Alpha Centauri ungefähr von der Sonne entfernt?', '3,105 Lichtjahre', '7,295 Lichtjahre', '10,203 Lichtjahre', '4,367 Lichtjahre'),
     (3, 'Die klassisch genormte Europalette EPAL1 besteht aus 78 Nägeln, neun Klötzen und insgesamt wie vielen Brettern?', 'neun', 'zehn', 'zwölf', 'elf');
 
