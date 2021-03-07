@@ -77,6 +77,7 @@ public class GameWindow extends FrameTemplate {
         setWindowProperties();
         initJokerListeners();
         initButtonListeners();
+        setJokerImages();
 
 
         setFrameTitle(currentGame.getGamerTag(), currentGame.getGameName(), currentGame.getGameID());
@@ -84,6 +85,13 @@ public class GameWindow extends FrameTemplate {
         this.add(panel1);
 
         buildGameWindow();
+    }
+
+    private void setJokerImages()
+    {
+        if (currentGame.jokerIsUsed("phone")) phoneJoker.setIcon(new ImageIcon("common/icons/jokers/used_jokerPhone_h64.png"));
+        if (currentGame.jokerIsUsed("fifty")) fiftyFiftyJoker.setIcon(new ImageIcon("common/icons/jokers/used_jokerFiftyFifty_h64.png"));
+        if (currentGame.jokerIsUsed("audience")) audienceJoker.setIcon(new ImageIcon("common/icons/jokers/used_jokerAudience_h64.png"));
     }
 
     private void setWindowProperties()
@@ -243,6 +251,9 @@ public class GameWindow extends FrameTemplate {
      */
     private void buildGameWindow()
     {
+        // Focus auf label
+        questionLabel.requestFocus();
+
         // Geldbetrag für die aktuelle Frage setzen
         currentQuestionMoneyAmount.setText(Utils.getQuestionMoneyAmount(currentGame.getCurrentQuestionNumber()));
 
@@ -303,6 +314,7 @@ public class GameWindow extends FrameTemplate {
                 buttonsDisabled++;
             }
             currentGame.useJoker("fifty");
+            fiftyFiftyJoker.setIcon(new ImageIcon("common/icons/jokers/used_jokerFiftyFifty_h64.png"));
         }
     }
 
@@ -336,12 +348,23 @@ public class GameWindow extends FrameTemplate {
             }
             JOptionPane.showMessageDialog(this, "Ich denke es ist Antwort " + propablyAnswer + ")", "Wer wird Millionär | Joker", JOptionPane.INFORMATION_MESSAGE);
             currentGame.useJoker("phone");
+            phoneJoker.setIcon(new ImageIcon("common/icons/jokers/used_jokerPhone_h64.png"));
         }
     }
 
 
-
+    /**
+     * Publikums-Joker
+     * Gibt zu 70% die richtige Antwort als Publikumsbefragung im Dialogfenster wieder
+     */
     private void useAudienceJoker() {
+
+
+        /*
+         * TODO: Funktioniert noch nicht :(
+         */
+
+
         if (currentGame.jokerIsUsed("audience")) {
             JOptionPane.showMessageDialog(this, "Dieser Joker wurde bereits eingesetzt!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
             return;
@@ -374,6 +397,7 @@ public class GameWindow extends FrameTemplate {
 
 
             currentGame.useJoker("audience");
+            audienceJoker.setIcon(new ImageIcon("common/icons/jokers/used_jokerAudience_h64.png"));
             DecimalFormat df = new DecimalFormat("#0.00");
             JOptionPane.showMessageDialog(this, "Ergebnisse der Publikumsbefragung:\n\nA) "+df.format(Utils.calcPercent(percentVals[0], Utils.sumUpArrayVals(sortedArray)))+" %\nB) "+df.format(Utils.calcPercent(percentVals[1], Utils.sumUpArrayVals(sortedArray)))+" %\nC) "+df.format(Utils.calcPercent(percentVals[2], Utils.sumUpArrayVals(sortedArray)))+" %\nD) "+df.format(Utils.calcPercent(percentVals[3], Utils.sumUpArrayVals(sortedArray))) + " %");
         }

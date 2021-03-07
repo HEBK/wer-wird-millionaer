@@ -11,25 +11,76 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Fragen-Liste Fenster.
+ * Zeigt alle Fragen in einer Tabelle an und erlaubt die Verwaltung dieser.
+ */
 public class QuestionList extends FrameTemplate {
+
+    /**
+     * JPanel welches alle weiteren Elemente für dieses Fenster enthält
+     */
     private JPanel questionListPanel;
+
+    /**
+     * JLabel für das Logo
+     */
     private JLabel logoImage;
-    private JButton deleteQuestionButton;
-    private JScrollPane tableScrollPane;
+
+    /**
+     * Fenster schließen Button
+     */
     private JButton closeButton;
-    private JLabel questionCountLabel;
+
+    /**
+     * Frage löschen Button
+     */
+    private JButton deleteQuestionButton;
+
+    /**
+     * Frage hinzufügen Button
+     */
     private JButton addQuestionButton;
+
+    /**
+     * Tabelle aktualisieren Button
+     */
     private JButton refreshButton;
 
-    // Question Table
+
+    /**
+     * Label welches die Informationen über die Anzahl der Elemente in der Tabelle enthält
+     */
+    private JLabel questionCountLabel;
+
+
+    /**
+     * TableModel für die Tabelle
+     */
     private DefaultTableModel questionTableModel;
+
+    /**
+     * Tabelle
+     */
     private JTable questionTable;
 
-    // Frame Controller
+    /**
+     * ScrollPane für die Tabelle.
+     * Ermöglicht das scrollen der Tabelle bei vielen Einträgen
+     */
+    private JScrollPane tableScrollPane;
+
+
+    /**
+     * GUIController für dieses Fenster
+     */
     private final GUIController myController;
 
 
-
+    /**
+     * Konstruktor der QuestionList Klasse
+     * @param pController GUIController für dieses Fenster
+     */
     public QuestionList(GUIController pController)
     {
         super("Wer wird Millionär | Fragenliste", new Dimension(900, 600));
@@ -38,27 +89,37 @@ public class QuestionList extends FrameTemplate {
         this.add(questionListPanel);
 
         this.setFrameProperties();
-        this.setEventListeners();
+        this.setButtonProperties();
 
         this.setQuestionCountLabel(questionTable.getRowCount());
 
         refreshButton.setEnabled(false);
     }
 
+    /**
+     * Setzt die Anzahl der aktuellen Zeilen der Tabelle im JLabel
+     * @param pCount Zeilenanzahl
+     */
     private void setQuestionCountLabel(int pCount)
     {
         this.questionCountLabel.setText("Derzeit befinden sich " + pCount + " Fragen in der Datenbank.");
     }
 
-    private void setEventListeners()
+    /**
+     * Setzt die Eigenschaften der Buttons dieses Fensters
+     */
+    private void setButtonProperties()
     {
+        // Fenster schließen button
         closeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Fenster schließen
                 dispose();
             }
         });
 
+        // Frage löschen button
         deleteQuestionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -81,9 +142,10 @@ public class QuestionList extends FrameTemplate {
             }
         });
 
-
+        // ActionListener für den 'Frage hinzufügen' Button setzen & Namen zuweisen
         addQuestionButton.addActionListener(myController);
         addQuestionButton.setName("QuestionList_addQuestion");
+
 
         refreshButton.addActionListener(new ActionListener() {
             @Override
@@ -96,7 +158,7 @@ public class QuestionList extends FrameTemplate {
     }
 
     /**
-     * Erstellt die Tabelle mit den Fragen
+     * Erstellt/"Baut" die Tabelle und setzt dessen Eigenschaften
      */
     private void buildTable()
     {
@@ -109,12 +171,21 @@ public class QuestionList extends FrameTemplate {
         String[][] data = getTableData();
 
         // Neues Tabellenmodell erstellen & Tabelle anhand des Modells erstellen -> Tabelle zum Scrollpanel hinzufügen
-        questionTableModel = new DefaultTableModel(data, columnNames);
+        questionTableModel = new DefaultTableModel(data, columnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column)
+            {
+                return false;
+            }
+        };
         questionTable = new JTable(questionTableModel);
         tableScrollPane = new JScrollPane(questionTable);
 
         // Zeilen mit klick auf Spaltenkopf sortierbar machen.
         questionTable.setAutoCreateRowSorter(true);
+
+        // Nur eine Zeile makierbar
+        questionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         // Zeilenhöhe setzen
         questionTable.setRowHeight(20);
@@ -156,6 +227,9 @@ public class QuestionList extends FrameTemplate {
         this.setVisible(true);
     }
 
+    /**
+     * IntelliJ Frame Builder method
+     */
     private void createUIComponents() {
         logoImage = new JLabel(new ImageIcon("common/logos/wwm_120x120.png"));
         buildTable();

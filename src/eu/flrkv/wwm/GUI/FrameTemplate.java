@@ -5,8 +5,18 @@ import eu.flrkv.wwm.Utils.Utils;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * Template Klasse zur Vererbung für Frames
+ */
 public abstract class FrameTemplate extends JFrame {
 
+    /**
+     * Konstruktor der Klasse FrameTemplate
+     * Setzt den Frame Titel und die Frame Größe
+     * @param pTitle Titel des Frames
+     * @param pDimension Größe des Fensters
+     */
     public FrameTemplate(String pTitle, Dimension pDimension)
     {
         // Execute parent constructor
@@ -15,13 +25,7 @@ public abstract class FrameTemplate extends JFrame {
         // Set the icon of the window
         this.setIconImage(Utils.getImageIcon().getImage());
 
-
         // Set the dimensions of the window
         this.setSize(pDimension);
     }
-
-
-
-
-
 }

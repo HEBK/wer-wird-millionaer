@@ -7,36 +7,103 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Fenster zum Hinzufügen einer neuen Frage zum Spiel
+ */
 public class AddNewQuestion extends FrameTemplate {
 
-    private final GUIController myController;
+    /**
+     * JPanel welches alle weiteren Elemente für dieses Fenster enthält
+     */
     private JPanel addQuestionPanel;
+
+    /**
+     * JLabel für das Logo
+     */
     private JLabel logo;
-    private JTextField questionInput;
-    private JComboBox<String> questionDifficulty;
-    private JTextField answer1Input;
+
+    /**
+     * Button um die Frage zu Speichern
+     */
     private JButton addQuestionButton;
+
+    /**
+     * Button um das Formular zu leeren
+     */
     private JButton resetFormButton;
+
+    /**
+     * Textfeld um die Fragestellung einzugeben
+     */
+    private JTextField questionInput;
+
+    /**
+     * ComboBox/Select/Auswahlliste um die Schwierigkeit der Frage zu wählen
+     */
+    private JComboBox<String> questionDifficulty;
+
+    /**
+     * Textfeld um die erste falsche Antwortmöglichkeit einzugeben.
+     */
+    private JTextField answer1Input;
+
+    /**
+     * Textfeld um die zweite falsche Antwortmöglichkeit einzugeben.
+     */
     private JTextField answer2Input;
+
+    /**
+     * Textfeld um die dritte falsche Antwortmöglichkeit einzugeben.
+     */
     private JTextField answer3Input;
+
+    /**
+     * Textfeld um die richtige Antwortmöglichkeit einzugeben.
+     */
     private JTextField rightAnswerInput;
 
+    /**
+     * Objekt des GUIControllers für dieses Fenster
+     */
+    private final GUIController myController;
+
+    /**
+     * Konstruktor der Klasse AddNewQuestion
+     * @param pController Objekt des GUIControllers für dieses Fenster
+     */
     public AddNewQuestion(GUIController pController) {
+        // Konstruktor der Oberklasse aufrufen
         super("Wer wird Millionär | Neue Frage hinzufügen", new Dimension(500, 900));
+
+        // GUIController für dieses Fenster setzen
         this.myController = pController;
-        setVisible(true);
 
-        setDefaultCloseOperation(FrameTemplate.DISPOSE_ON_CLOSE);
+        // Eigenschaften für dieses Fenster setzen
+        setFrameProperties();
 
-
+        // Haupt-JPanel zum Frame hinzufügen
         this.add(addQuestionPanel);
 
+        // Größe des Fensters an die Elemente anpassen
         pack();
 
+        // EventListener/ActionListener setzen
         setEventListeners();
-
     }
 
+    /**
+     * Setzt die Eigenschaften dieses Fensters
+     */
+    private void setFrameProperties()
+    {
+        this.setVisible(true);
+        this.setDefaultCloseOperation(FrameTemplate.DISPOSE_ON_CLOSE);
+    }
+
+    /**
+     * Leert das Formular.
+     * Setzt den Cursor zurück in das Eingabefeld für die Fragestellung
+     */
     public void resetForm()
     {
         questionInput.setText("");
@@ -48,8 +115,12 @@ public class AddNewQuestion extends FrameTemplate {
         questionInput.requestFocus();
     }
 
+    /**
+     * Setzt die EventListener/ActionListener für die Buttons
+     */
     private void setEventListeners()
     {
+        // 'Frage hinzufügen' Button
         addQuestionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -63,6 +134,8 @@ public class AddNewQuestion extends FrameTemplate {
                 }
             }
         });
+
+        // 'Zurücksetzen' Button
         resetFormButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,16 +144,11 @@ public class AddNewQuestion extends FrameTemplate {
         });
     }
 
-    private int convertDifficulty(String pDifficulty)
-    {
-        return switch (pDifficulty) {
-            case "Einfach" -> 1;
-            case "Mittel" -> 2;
-            case "Schwer" -> 3;
-            default -> 0;
-        };
-    }
-
+    /**
+     * Derzeitige Eingaben überprüfen
+     * @param pShowPrompts Wenn true, wird ein Dialogfenster mit der entsprechended Fehlermeldung angezeigt
+     * @return Gibt true zurück wenn die Prüfung erfolgreich war. Andernfalls wird false zurückgegeben
+     */
     private boolean checkQuestionValidity(boolean pShowPrompts)
     {
         if (questionInput.getText().length() > 120) {
@@ -98,7 +166,9 @@ public class AddNewQuestion extends FrameTemplate {
         return true;
     }
 
-
+    /**
+     * IntelliJ Frame Builder method
+     */
     private void createUIComponents() {
         logo = new JLabel(new ImageIcon("common/logos/wwm_120x120.png"));
     }

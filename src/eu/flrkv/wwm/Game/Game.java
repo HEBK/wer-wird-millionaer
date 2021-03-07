@@ -10,6 +10,9 @@ import eu.flrkv.wwm.Utils.Utils;
 import javax.swing.*;
 import java.util.HashMap;
 
+/**
+ * Klasse eines Spiels
+ */
 public class Game {
 
     /**
@@ -64,12 +67,16 @@ public class Game {
      */
     public Game(int pGameID) throws GameNotFoundException
     {
+        // Überprüfen ob Spiel mit dieser ID existiert
         if (!GameController.gameExists(pGameID)) {
             Utils.consoleLog("ERROR", "Game not found!");
             throw new GameNotFoundException("The Game with the ID '"+pGameID+"' could not be found!");
         }
 
+        // SpielID setzen
         this.gameID = pGameID;
+
+        // Gespeicherte Daten für das Spiel anfordern und setzen
         HashMap<String, String> data = GameController.getGameData(this.gameID);
         if (data != null) {
             this.currentQuestionNumber = Integer.parseInt(data.get("questionNumber"));
@@ -79,6 +86,7 @@ public class Game {
             this.gamerTag = data.get("gamerTag");
             this.gameName = data.get("gameName");
 
+            // Prüfen ob die letzte angezeigte Frage noch existiert
             try {
                 setQuestion(QuestionController.getQuestion(currentQuestionID), currentQuestionNumber);
             } catch (QuestionNotFoundException e) {
@@ -96,8 +104,9 @@ public class Game {
      */
     public Game(String pGameName, String pGamerTag) {
 
-        // Create Game
+        // Prüfen ob spiel erfolgreich erstellt wurde
         if (GameController.createGame(pGamerTag, pGameName)) {
+            // ID dieses Spiels bekommen indem die letzte SpielID abgefragt wird
             if (GameController.getLastGameID() != null) {
                 this.gameID = GameController.getLastGameID();
                 Utils.consoleLog("INFO", "The Current GameID is '"+this.gameID+"'");
@@ -106,67 +115,65 @@ public class Game {
                 Utils.exitProgram(1);
             }
         } else {
+            // Kritischer Fehler bei der erstellung des Spiels
             Utils.consoleLog("ERROR", "Fatal error while creating game!");
             Utils.exitProgram(1);
         }
 
+        // Übergebenen Spiel- & Spielernamen setzen
         this.gameName = pGameName;
         this.gamerTag = pGamerTag;
 
-        HashMap<String, String> data = GameController.getGameData(this.gameID);
-        if (data != null) {
-            this.currentQuestionNumber = Integer.parseInt(data.get("questionNumber"));
-            this.usedJokers = data.get("usedJokers");
-        }
+        // Joker noch nicht verwendet setzen & Nummer der aktuellen Frage setzen
+        this.usedJokers = null;
+        this.currentQuestionNumber = 1;
 
-
-        // Set Question
+        // Frage setzen
         nextQuestion(true);
     }
 
-
+    /**
+     * Holt eine neue Frage, die in diesem Spiel noch nicht benutzt wurde und setzt diese als aktuelle Frage
+     * @param pFirst Erste Frage (Falls vorher noch keine Frage gesetzt wurde)
+     */
     public void nextQuestion(boolean pFirst)
     {
-        if (!pFirst) this.currentQuestionNumber = currentQuestionNumber+1;
-        this.currentQuestion = questionController.getNewQuestion(Utils.getQuestionDifficulty(currentQuestionNumber));
-        this.currentQuestionID = currentQuestion.getId();
+        if (!pFirst) this.currentQuestionNumber = currentQuestionNumber+1;                                                  // Aktuelle Fragennummer um eins erhöhen
+        this.currentQuestion = questionController.getNewQuestion(Utils.getQuestionDifficulty(currentQuestionNumber));       // Frage setzen
+        this.currentQuestionID = currentQuestion.getId();                                                                   // FragenID setzen
     }
-
-    private void setQuestion(Question pQuestion, int pQuestionNumber)
-    {
-        this.currentQuestion = pQuestion;
-        this.currentQuestionNumber = pQuestionNumber;
-    }
-
-
 
     /**
-     * Gibt den QuestionController für dieses Spiel zurück.
-     * @return Question controller in Form eines Objekts der Klasse QuestionController
+     * Setzt eine vorgegebene Frage als derzeitige Frage
+     * @param pQuestion Zu setzende Frage
+     * @param pQuestionNumber Fragennummer
      */
-    public QuestionController getQuestionController()
+    private void setQuestion(Question pQuestion, int pQuestionNumber)
     {
-        return questionController;
+        this.currentQuestion = pQuestion;                       // Frage setzen
+        this.currentQuestionNumber = pQuestionNumber;           // FragenID setzen
     }
 
-
+    /**
+     * Gibt alle bereits genutzten Fragen Komma-Separiert zurück
+     * @return Komma-Separierter String mit allen FragenIDs die bereits genutzt wurden
+     */
     public String getUsedQuestions() {
         return this.usedQuestions;
     }
 
+    /**
+     * Setzt einen Komma-Separierten String mit FragenIDs als bereits genutzte Fragen
+     * @param usedQuestions Komma-Separierter String mit allen FragenIDs die bereits genutzt wurden
+     */
     public void setUsedQuestions(String usedQuestions) {
         this.usedQuestions = usedQuestions;
     }
 
     /**
-     * Gibt die ID der aktuellen Frage zurück.
-     * @return ID der aktuellen Frage als Integer
+     * Gibt die aktuelle SpielID zurück
+     * @return SpielID als Integer
      */
-    public int getCurrentQuestionID()
-    {
-        return this.currentQuestionID;
-    }
-
     public int getGameID()
     {
         return this.gameID;
@@ -209,12 +216,19 @@ public class Game {
         return this.currentQuestion;
     }
 
+    /**
+     * Setzt das Attribut für die aktuelle Frage (Ändert nicht die angezeigte Frage!)
+     * @param pQuestion Objekt des Datentyps Question
+     */
     public void setCurrentQuestion(Question pQuestion)
     {
         this.currentQuestion = pQuestion;
     }
 
-
+    /**
+     * Gibt ein String-Array mit allen genutzen Jokern zurück
+     * @return String-Array mit genutzen Jokern. Falls leer wird ein leeres Array zurückgegeben.
+     */
     public String[] getUsedJokersArray()
     {
         if (this.usedJokers == null) {
@@ -223,6 +237,11 @@ public class Game {
         return this.usedJokers.split(",");
     }
 
+    /**
+     * Prüft ob ein Joker bereits eingesetzt wurde
+     * @param pJoker Zu überprüfender Joker
+     * @return Gibt true zurück falls der Joker bereits genutzt wurde
+     */
     public boolean jokerIsUsed(String pJoker)
     {
         if (this.usedJokers == null || this.usedJokers.isEmpty()) {
@@ -237,6 +256,10 @@ public class Game {
         return bool;
     }
 
+    /**
+     * Setzt einen Joker als eingesetzt
+     * @param pJoker Joker
+     */
     public void useJoker(String pJoker)
     {
         if (this.usedJokers == null) {
@@ -248,10 +271,12 @@ public class Game {
 
     /**
      * Spiel verloren
+     * Zeigt Dialogfenster mit den Spielstatistiken und speichert ggf. den Highscore.
+     * Löscht das Spiel
      */
     public void lost()
     {
-        int select = JOptionPane.showConfirmDialog(null, "Du leider falsch geantwortet!\n\nDein erspielter Betrag:  "+Utils.getSecurityLevelMoneyAmount(currentQuestionNumber-1)+"\n\nSoll dein Spielstand in die Bestenliste aufgenommen werden?", "Wer wird Millionär | Falsche Antwort", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        int select = JOptionPane.showConfirmDialog(null, "Du leider falsch geantwortet!\n\nRichtige Antwort: "+currentQuestion.getRightAnswer()+"\nDein erspielter Betrag:  "+Utils.getSecurityLevelMoneyAmount(currentQuestionNumber-1)+"\n\nSoll dein Spielstand in die Bestenliste aufgenommen werden?", "Wer wird Millionär | Falsche Antwort", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
         if (select == JOptionPane.YES_OPTION) {
             if (!addToHighscores(true)) {
                 JOptionPane.showMessageDialog(null, "Fehler beim Speichern des Highscores!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
@@ -260,16 +285,29 @@ public class Game {
         deleteGame();
     }
 
+    /**
+     * Fügt den Spielstand mit den derzeitigen Daten der Bestenliste hinzu
+     * @param pBackToSecurityLevel Wenn true wird die letzte Sicherheitsstufe als Score gespeichert. Wenn false der bereits erspielte Geldbetrag
+     * @return Gibt true zurück sofern der Highscore erfolgreich gespeichert wurde
+     */
     public boolean addToHighscores(boolean pBackToSecurityLevel)
     {
         return HighscoreController.addHighscore(gamerTag, gameName, pBackToSecurityLevel ? Utils.getLastSecurityLevel(currentQuestionNumber-1) : currentQuestionNumber-1, getUsedJokersArray().length);
     }
 
+    /**
+     * Löscht das aktuelle Spiel / den aktuellen Spielstand
+     * @return Gibt true zurück wenn das Spiel erfolgreich gelöscht wurde
+     */
     public boolean deleteGame()
     {
         return GameController.deleteGame(this.gameID);
     }
 
+    /**
+     * Speichert/Überschreibt den aktuellen Spielstand mit den aktuellen Spieldaten
+     * @return Gibt true zurück wenn das Spiel erfolgreich gespeichert wurde
+     */
     public boolean saveGame() {
         return GameController.updateGame(this.getGameID(), this.getCurrentQuestionNumber(), this.getCurrentQuestion().getId(), this.usedQuestions, this.usedJokers);
     }

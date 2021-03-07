@@ -11,21 +11,56 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+/**
+ * Bestenliste Fenster.
+ * Zeigt alle Highscores in einer Tabelle an.
+ */
 public class HighscoresList extends FrameTemplate {
-    private JScrollPane tableScrollPane;
-    private JLabel logoImage;
-    private JButton deleteEntryButton;
-    private JLabel entryCountLabel;
-    private JButton closeButton;
+
+    /**
+     * JPanel welches alle weiteren Elemente für dieses Fenster enthält
+     */
     private JPanel highscoresList;
 
-    // GUIController
-    private GUIController myController;
+    /**
+     * JLabel für das Logo
+     */
+    private JLabel logoImage;
+
+
+    /**
+     * Label welches die Informationen über die Anzahl der Elemente in der Tabelle enthält
+     */
+    private JLabel entryCountLabel;
+
+
+    /**
+     * Button zum entfernen eines Datensatzes (Highscore)
+     */
+    private JButton deleteEntryButton;
+
+    /**
+     * Button zum schließen des Fensters
+     */
+    private JButton closeButton;
+
 
     // Table
+    private JScrollPane tableScrollPane;
     private DefaultTableModel highscoresTableModel;
     private JTable highscoresTable;
 
+    /**
+     * GUIController für dieses Fenster
+     */
+    private GUIController myController;
+
+
+    /**
+     * Konstruktor der Klasse HighscoresList
+     * @param pController GUIController für dieses Fenster
+     */
     public HighscoresList(GUIController pController)
     {
         super("Wer wird Millionär | Bestenliste", new Dimension(900, 600));
@@ -42,8 +77,22 @@ public class HighscoresList extends FrameTemplate {
         // Haupt-JPanel zum Frame hinzufügen
         this.add(highscoresList);
 
+        // Label mit der Anzahl der Spielstände setzen
+        setEntryCountLabel(highscoresTable.getRowCount());
     }
 
+    /**
+     * Setzt die Anzahl der aktuellen Zeilen der Tabelle im JLabel
+     * @param pCount Zeilenanzahl
+     */
+    private void setEntryCountLabel(int pCount)
+    {
+        this.entryCountLabel.setText("Es wurden " + pCount + " Einträge gefunden.");
+    }
+
+    /**
+     * Setzt die Fenster-Eigenschaften für dieses JFrame
+     */
     private void setFrameProperties()
     {
         this.setResizable(false);
@@ -51,6 +100,10 @@ public class HighscoresList extends FrameTemplate {
         this.setDefaultCloseOperation(FrameTemplate.DISPOSE_ON_CLOSE);
     }
 
+    /**
+     * Holt die Daten aller Spielstände aus der Datenbank und packt sie in ein JTable kompatibles Array
+     * @return JTable Daten-Array mit allen Informationen
+     */
     private String[][] getTableData()
     {
         ArrayList<HashMap<String, String>> allHighscores = HighscoreController.getAllHighscores();
@@ -68,6 +121,9 @@ public class HighscoresList extends FrameTemplate {
         return data;
     }
 
+    /**
+     * Erstellt/"Baut" die Tabelle und setzt dessen Eigenschaften
+     */
     private void buildTable()
     {
         Utils.consoleLog("INFO", "Building highscore table...");
@@ -79,12 +135,21 @@ public class HighscoresList extends FrameTemplate {
         String[][] data = getTableData();
 
         // Neues Tabellenmodell erstellen & Tabelle anhand des Modells erstellen -> Tabelle zum Scrollpanel hinzufügen
-        highscoresTableModel = new DefaultTableModel(data, columnNames);
+        highscoresTableModel = new DefaultTableModel(data, columnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column)
+            {
+                return false;
+            }
+        };
         highscoresTable = new JTable(highscoresTableModel);
         tableScrollPane = new JScrollPane(highscoresTable);
 
         // Zeilen mit klick auf Spaltenkopf sortierbar machen.
         highscoresTable.setAutoCreateRowSorter(true);
+
+        // Nur eine Zeile makierbar
+        highscoresTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         // Zeilenhöhe setzen
         highscoresTable.setRowHeight(22);
@@ -97,22 +162,54 @@ public class HighscoresList extends FrameTemplate {
         highscoresTable.getColumnModel().getColumn(4).setPreferredWidth(30);
     }
 
+    /**
+     * IntelliJ Frame Builder method
+     */
     public void createUIComponents()
     {
         logoImage = new JLabel(new ImageIcon("common/logos/wwm_120x120.png"));
         buildTable();
     }
 
+    /**
+     * Setzt die ActionListener für die verschiedenen Buttons dieses Fensters
+     */
     private void setActionListeners()
     {
+        // Close Button
         closeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
             }
         });
+
+        // Knopf zum Löschen von Einträgen
+        deleteEntryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Prüfen ob eine Zeile gewählt wurde
+                if (!highscoresTable.getSelectionModel().isSelectionEmpty()) {
+                    // Zeile & SpielID
+                    int selectedRow = highscoresTable.getSelectedRow();
+                    int entryID = Integer.parseInt(highscoresTable.getValueAt(highscoresTable.getSelectedRow(), 0).toString());
+
+                    // Abfrage ob der der Eintrag wirklich gelöscht werden soll
+                    if (JOptionPane.showConfirmDialog(null, "Möchten Sie den gewählten Eintrag löschen?", "Wer wird Millionär | Eintrag löschen", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+
+                        // Prüfen ob Löschung erfolgreich
+                        if (HighscoreController.deleteHighscore(entryID)) {
+                            JOptionPane.showMessageDialog(null, "Der Eintrag wurde erfolgreich gelöscht!", "Wer wird Millionär | Eintrag gelöscht!", JOptionPane.INFORMATION_MESSAGE);
+                            highscoresTableModel.removeRow(selectedRow);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Beim Löschen des Eintrags trat ein Fehler auf!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                } else {
+                    // Keine Zeile gewählt
+                    JOptionPane.showMessageDialog(null, "Es wurde kein Eintrag ausgewählt!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
     }
-
-
-
 }

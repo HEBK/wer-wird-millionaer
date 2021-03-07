@@ -12,24 +12,67 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * Klasse zur Verwaltung der Fenster
+ */
 public class GUIController implements ActionListener {
 
-
-    // GUI-Windows
+    /**
+     * Fenster für die Konfiguration der MySQL-Datenbankverbindung
+     */
     private MySQLConn sql;
+
+    /**
+     * Fenster für das Hauptmenü
+     */
     private MainMenu menu;
+
+    /**
+     * Fenster um ein neues Spiel zu erstellen
+     */
     private CreateNewGame newGame;
+
+    /**
+     * Fenster mit Informationen über die Software
+     */
     private About about;
+
+    /**
+     * Fenster mit der Liste aller Fragen (Fragenverwaltung)
+     */
     private QuestionList questionList;
+
+    /**
+     * Fenster zum hinzufügen neuer Fragen
+     */
     private AddNewQuestion addNewQuestion;
+
+    /**
+     * Fenster mit der Liste aller Spielstände (Spielstandverwaltung)
+     */
     private GamesList saveGames;
+
+    /**
+     * Fenster mit der Liste aller aufgestellten HighScores
+     */
     private HighscoresList highscoresList;
 
 
-    // Ingame situation
+    /**
+     * Fenster für das aktuelle Spiel
+     */
     private GameWindow gameWindow;
+
+    /**
+     * Aktuelles Spielobjekt
+     */
     private Game game;
 
+
+    /**
+     * Konstruktor der Klasse GUIController
+     * Gibt eine Statusmeldung aus
+     */
     public GUIController()
     {
         Utils.consoleLog("INFO", "GUIController was initialized successfully!");
@@ -134,6 +177,12 @@ public class GUIController implements ActionListener {
         }
     }
 
+    /**
+     * Lädt das übergebene Spiel
+     * Öffnet das Spielfenster und blendet das Hauptmenü aus
+     *
+     * @param g Zu ladendes Spiel (Spielobjekt der Klasse Game)
+     */
     public void loadGame(Game g)
     {
         if (g == null) {

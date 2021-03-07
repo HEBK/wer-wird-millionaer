@@ -9,34 +9,78 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+/**
+ * Über/Spielinformationen Fenster.
+ */
 public class About extends FrameTemplate {
-    private JPanel aboutGUI;
-    private JLabel image;
-    private JButton gitHubButton;
-    private JButton licenseButton;
-    private JButton closeButton;
-    private JLabel titleVersionLabel;
 
+    /**
+     * JPanel welches alle weiteren Elemente für dieses Fenster enthält
+     */
+    private JPanel aboutGUI;
+
+    /**
+     * JLabel für das Logo
+     */
+    private JLabel image;
+
+    /**
+     * Button um die Projektseite des Spiels auf GitHub aufzurufen
+     */
+    private JButton gitHubButton;
+
+    /**
+     * Button um die Lizenzdatei zu öffnen
+     */
+    private JButton licenseButton;
+
+    /**
+     * Button um das Fenster zu schließen
+     */
+    private JButton closeButton;
+
+    /**
+     * Objekt des GUIControllers für dieses Fenster
+     */
     private GUIController myController;
 
 
+    /**
+     * Konstruktor der Klasse About
+     * @param pController GUIController für dieses Fenster
+     */
     public About(GUIController pController)
     {
         super("Wer wird Millionär | Über", new Dimension(500, 375));
 
+        // Controller setzen
         this.myController = pController;
 
-        this.setVisible(true);
+        // Haupt-JPanel zum Frame hinzufügen
         this.add(aboutGUI);
-        this.setResizable(false);
 
+        // EventListener hinzufügen
         setEventListeners();
 
-        Utils.consoleLog("INFO", "Showing About window");
+        // Fenstereigenschaften setzen
+        setFrameProperties();
     }
 
+    /**
+     * Setzt die Eigenschaften dieses Fensters
+     */
+    private void setFrameProperties()
+    {
+        this.setResizable(false);
+        this.setVisible(true);
+    }
+
+    /**
+     * Setzt die EventListener/ActionListener für die Buttons
+     */
     public void setEventListeners()
     {
+        // GitHub-Button -> Öffnet die Projektseite auf Github
         gitHubButton.addActionListener(e -> {
             try {
                 Desktop.getDesktop().browse(new URI("https://github.com/HEBK/wer-wird-millionaer"));
@@ -46,7 +90,11 @@ public class About extends FrameTemplate {
                 ioException.printStackTrace();
             }
         });
+
+        // Button zum Schließen des Fensters
         closeButton.addActionListener(e -> dispose());
+
+        // Button zum Öffnen der Lizenzdatei
         licenseButton.addActionListener(e -> {
             try {
                 Desktop.getDesktop().open(new File("licenses/LICENSE.rtf"));
@@ -57,6 +105,9 @@ public class About extends FrameTemplate {
         });
     }
 
+    /**
+     * IntelliJ Frame Builder method
+     */
     private void createUIComponents() {
         image = new JLabel(new ImageIcon("common/logos/wwm_120x120.png"));
     }
