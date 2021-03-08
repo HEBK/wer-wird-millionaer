@@ -27,7 +27,7 @@ Um das Programm nun zu installieren führen sie die folgenden Schritte aus:
 4. Das Programm wurde auf Ihrem Computer installiert.
 
 Beachten Sie, dass Sie beim erstmaligen starten der Software eine (SQL-)Datenbankverbindung hinterlegen müssen.
-Um komplikationen zu vermeiden sollte diese leer sein oder keine Tabellen mit dem Prefix '_wwm' enthalten.
+Um komplikationen zu vermeiden sollte die Datenbank leer sein oder keine Tabellen mit dem Prefix 'wwm_' enthalten.
 Wenn die Verbindung erfolgreich hergestellt wurde, werden Sie zum Hauptmenü weitergeleitet. Das Spiel ist nun einsatzbereit!
 
 ## Mitwirkende
