@@ -104,7 +104,7 @@ public class AddNewQuestion extends FrameTemplate {
      * Leert das Formular.
      * Setzt den Cursor zurück in das Eingabefeld für die Fragestellung
      */
-    public void resetForm()
+    private void resetForm()
     {
         questionInput.setText("");
         questionDifficulty.setSelectedIndex(0);

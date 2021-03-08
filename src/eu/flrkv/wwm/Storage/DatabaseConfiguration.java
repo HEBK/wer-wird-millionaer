@@ -6,6 +6,10 @@ import org.jetbrains.annotations.Nullable;
 import java.io.*;
 import java.util.Properties;
 
+
+/**
+ * Klasse zur Verwaltung der Konfigurationsdatei f&uuml;r die Datenbank
+ */
 public class DatabaseConfiguration {
 
     /**

@@ -1,5 +1,8 @@
 package eu.flrkv.wwm.Question;
 
+/**
+ * Klasse zur Erstellung eines Fragenobjekts
+ */
 public class Question {
 
     /**
@@ -97,6 +100,10 @@ public class Question {
         return id;
     }
 
+    /**
+     * Gibt den Schwierigkeitsgrad der Frage als String zur&uuml;ck.
+     * @return Schwierigkeitsgrad als String
+     */
     public String getDifficultyString()
     {
         switch (this.difficulty) {

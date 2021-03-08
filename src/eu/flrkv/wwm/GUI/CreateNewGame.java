@@ -97,7 +97,7 @@ public class CreateNewGame extends FrameTemplate{
     /**
      * Setzt die EventListener/ActionListener für die Buttons
      */
-    public void setEventListeners()
+    private void setEventListeners()
     {
         // Überprüfen der Länge vom Spielnamen Textfeld
         gameNameInput.addKeyListener(new KeyAdapter() {

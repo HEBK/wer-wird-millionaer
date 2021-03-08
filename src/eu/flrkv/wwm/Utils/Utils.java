@@ -1,8 +1,10 @@
 package eu.flrkv.wwm.Utils;
 
 import javax.swing.*;
-import java.util.*;
 
+/**
+ * Klasse mit hilfreichen Methoden
+ */
 public class Utils {
 
     /**
@@ -39,12 +41,12 @@ public class Utils {
         }
     }
 
-    public static ImageIcon getImageIcon()
-    {
-        return new ImageIcon("common/logos/wwm.png");
-    }
-
-    public static String getQuestionMoneyAmount(int pQuestionNumber)
+    /**
+     * Gibt anhand der Fragennummer den Geldbetrag der Frage als String zur&uuml;ck
+     * @param pQuestionNumber Fragennummer
+     * @return Geldbetrag der Fragestufe. (Wenn nicht zwischen 0 - 15 -> NaN)
+     */
+    public static String questioNumbertoString(int pQuestionNumber)
     {
         return switch (pQuestionNumber) {
             case 0 -> "€ 0";
@@ -77,16 +79,31 @@ public class Utils {
         return pQuestionNo >= 15 ? "€ 1.000.000" : pQuestionNo >= 10 ? "€ 16.000" : pQuestionNo >= 5 ? "€ 500" : "€ 0";
     }
 
+    /**
+     * Gibt die Fragenstufe aus, welche das letzte Sicherheitslevel war.
+     * @param pQuestionNo Fragennummer der aktuellen Frage
+     * @return Fragenstufe des letzten sicheren Geldbetrags
+     */
     public static int getLastSecurityLevel(int pQuestionNo)
     {
         return pQuestionNo >= 15 ? 15 : pQuestionNo >= 10 ? 10 : pQuestionNo >= 5 ? 5 : 0;
     }
 
+    /**
+     * Gibt den Schwierigkeitsgrad der Fragennummer als Integer zur&uuml;ck
+     * @param pQuestionNumber Fragennummer
+     * @return Schwierigkeitsgrad als Integer
+     */
     public static int getQuestionDifficulty(int pQuestionNumber)
     {
         return (pQuestionNumber > 0 && pQuestionNumber < 6) ? 1 : (pQuestionNumber > 5 && pQuestionNumber < 11) ? 2 : 3;
     }
 
+    /**
+     * Gibt anhand der ButtonNummer im ButtonArray den Antwortbuchstaben zur&uuml;ck
+     * @param pNo ButtonNummer
+     * @return Antwortbuchstaben
+     */
     public static char buttonNoToChar(int pNo)
     {
         return switch (pNo) {
@@ -98,50 +115,19 @@ public class Utils {
         };
     }
 
+    /**
+     * Zeigt ein Dialogfenster, welches auf einen Fehler hinweist
+     */
     public static void unknownErrorPopup()
     {
         JOptionPane.showMessageDialog(null, "Es ist ein Fehler bei der Verarbeitung der Anfrage aufgetreten!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
     }
 
-    public static boolean arrayContainsValue(int pValue, int[] pArray) {
-        return Arrays.stream(pArray).anyMatch(a -> a == pValue);
-    }
-
-    public static int[] getRandomValueArray(int pPositionCount)
-    {
-
-        int[] retArray = new int[pPositionCount];
-        Random r = new Random();
-
-        int randomInt;
-        for (int i=0; i < retArray.length; i++) {
-            randomInt = r.nextInt(100);
-
-            while (arrayContainsValue(randomInt, retArray)) {
-                randomInt = r.nextInt(100);
-            }
-            retArray[i] = randomInt;
-        }
-
-
-        return retArray;
-    }
-
-    public static int[] sortArrayByValues(int[] pArray)
-    {
-        int tmp;
-        for (int i = 0; i < pArray.length; i++) {
-            for (int j=0; j < pArray.length-1; j++) {
-                if (pArray[j] > pArray[j+1]) {
-                    tmp = pArray[j];
-                    pArray[j] = pArray[j+1];
-                    pArray[j+1] = tmp;
-                }
-            }
-        }
-        return pArray;
-    }
-
+    /**
+     * Rechnet die Werte aller Elemente im Array zusammen und gibt diesen zur&uuml;ck
+     * @param pArray Array
+     * @return Zusammengerechneter Wert
+     */
     public static int sumUpArrayVals(int[] pArray)
     {
         int ret = 0;
@@ -151,13 +137,23 @@ public class Utils {
         return ret;
     }
 
-
-
+    /**
+     * Berechnet den Prozentsatz aus Prozentwert und Grundwert
+     * @param pVal Prozentwert
+     * @param pBaseVal Grundwert
+     * @return Prozentsatz
+     */
     public static double calcPercent(double pVal, double pBaseVal)
     {
         return pVal/pBaseVal*100;
     }
 
+    /**
+     * Gibt eine zuf&auml;llige Zahl zwischen zwei Grenzwerten zur&uuml;ck
+     * @param pMax Maximaler Wert
+     * @param pMin Minimaler Wert
+     * @return Zuf&auml;lliger Wert
+     */
     public static int getRandomNumber(int pMax, int pMin)
     {
         return (int) ((Math.random() * (pMax - pMin)) + pMin);

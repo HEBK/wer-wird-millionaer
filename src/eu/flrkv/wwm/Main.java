@@ -7,7 +7,9 @@ import eu.flrkv.wwm.Utils.Utils;
 import javax.swing.*;
 import java.sql.*;
 
-
+/**
+ * Klasse um das Programm zu starrten
+ */
 public class Main {
 
     /**
@@ -54,7 +56,7 @@ public class Main {
 
     /**
      * Setzt das Design (Look and Feel) für das Swing UI.
-     * Gibt Status- & Fehlermeldungen in der Konsole aus.
+     * Gibt Status- und Fehlermeldungen in der Konsole aus.
      * @param pLookAndFeel Das zu verwendende Design/LookAndFeel als Objekt des Datentyps 'LookAndFeel'
      */
     private static void loadLookAndFeel(LookAndFeel pLookAndFeel)

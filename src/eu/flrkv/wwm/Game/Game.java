@@ -64,6 +64,7 @@ public class Game {
     /**
      * Konstruktor um ein bereits vorhandenes Spiel fortzuführen.
      * @param pGameID Unique ID des Spiels, welches fortgeführt werden soll
+     * @throws GameNotFoundException falls der Spielstand nicht gefunden wurde
      */
     public Game(int pGameID) throws GameNotFoundException
     {

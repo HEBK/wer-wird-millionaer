@@ -8,20 +8,62 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Fenster zur Konfiguration der Datenbankverbindung.
+ * Wird beim ersten Start der Software angezeigt
+ */
 public class MySQLConn extends FrameTemplate {
 
-
+    /**
+     * JPanel welches alle weiteren Elemente für dieses Fenster enthält
+     */
     private JPanel dbConnPanel;
+
+    /**
+     * Textfeld zur Eingabe des Datenbank-Servers
+     */
     private JTextField db_host;
+
+    /**
+     * Textfeld zur Eingabe des Ports auf dem der Server lauscht
+     */
     private JTextField db_port;
+
+    /**
+     * Textfeld zur Eingabe des Benutzernamens
+     */
     private JTextField db_user;
-    private JPasswordField db_password;
+
+    /**
+     * Textfeld zur Eingabe des Datenbank-Namen
+     */
     private JTextField db_name;
+
+    /**
+     * Passwort-Textfeld zur Eingabe des Passworts
+     */
+    private JPasswordField db_password;
+
+    /**
+     * Button zum best&auml;tigen und speichern der Datenbankverbindungsdetails
+     */
     private JButton checkSave;
+
+    /**
+     * JLabel zum anzeigen etwaiger Fehler- oder Best&auml;tigungsmeldungen
+     */
     private JLabel response;
 
+    /**
+     * GUIController für dieses Fenster
+     */
     private final GUIController myController;
 
+
+    /**
+     * Konstruktor der Klasse MySQLConn
+     * @param pController GUIController für dieses Fenster
+     */
     public MySQLConn(GUIController pController) {
         // Call the parent constructor
         super("Wer wird Millionär | Datenbankverbindung", new Dimension(600, 335));
