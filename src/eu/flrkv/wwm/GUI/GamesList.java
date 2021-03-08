@@ -18,23 +18,56 @@ import java.util.HashMap;
  */
 public class GamesList extends FrameTemplate {
 
-
+    /**
+     * JPanel welches alle weiteren Elemente für dieses Fenster enthält
+     */
     private JPanel gamesListPanel;
+
+    /**
+     * JLabel für das Logo
+     */
     private JLabel logoImage;
 
-    private JButton deleteGameButton;
-    private JButton loadGameButton;
-    private JButton closeButton;
-
+    /**
+     * Label welches die Informationen über die Anzahl der Elemente in der Tabelle enthält
+     */
     private JLabel saveGameCountLabel;
 
-    // GUIController
-    GUIController myController;
+    /**
+     * Button zum Entfernen eines Spielstands
+     */
+    private JButton deleteGameButton;
 
-    // Tabelle
+    /**
+     * Button zum Laden eines Spiels
+     */
+    private JButton loadGameButton;
+
+    /**
+     * Button zum schließen des Fensters
+     */
+    private JButton closeButton;
+
+    /**
+     * Tabelle
+     */
     private JTable saveGameTable;
+
+    /**
+     * TableModel für die Tabelle
+     */
     private DefaultTableModel saveGameTableModel;
+
+    /**
+     * ScrollPane für die Tabelle.
+     * Ermöglicht das scrollen der Tabelle bei vielen Einträgen
+     */
     private JScrollPane tableScrollPane;
+
+    /**
+     * GUIController für dieses Fenster
+     */
+    private final GUIController myController;
 
 
     /**
@@ -72,13 +105,19 @@ public class GamesList extends FrameTemplate {
         this.setVisible(true);
     }
 
-
+    /**
+     * Setzt die Anzahl der aktuellen Zeilen der Tabelle im JLabel
+     * @param pCount Zeilenanzahl
+     */
     private void setSaveGameCountLabel(int pCount)
     {
         this.saveGameCountLabel.setText("Es existieren " + pCount + " Spielstände in der Datenbank.");
     }
 
-
+    /**
+     * Holt die Daten aller Spielstände aus der Datenbank und packt sie in ein JTable kompatibles Array
+     * @return JTable Daten-Array mit allen Informationen
+     */
     private String[][] getTableData()
     {
         ArrayList<HashMap<String, String>> allSaveGames = GameController.getAllSaveGames();
@@ -90,14 +129,15 @@ public class GamesList extends FrameTemplate {
             data[i][0] = hm.get("gameID");
             data[i][1] = hm.get("gameName");
             data[i][2] = hm.get("gamerTag");
-            data[i][3] = Utils.getQuestionMoneyAmount(Integer.parseInt(hm.get("questionNumber")));
+            data[i][3] = Utils.questioNumbertoString(Integer.parseInt(hm.get("questionNumber")));
             data[i][4] = hm.get("lastUpdate");
         }
         return data;
     }
 
-
-
+    /**
+     * Erstellt/"Baut" die Tabelle und setzt dessen Eigenschaften
+     */
     private void buildTable()
     {
         Utils.consoleLog("INFO", "Building game list table...");
@@ -136,12 +176,18 @@ public class GamesList extends FrameTemplate {
         saveGameTable.getColumnModel().getColumn(4).setPreferredWidth(120);
     }
 
+    /**
+     * IntelliJ Frame Builder method
+     */
     private void createUIComponents()
     {
         logoImage = new JLabel(new ImageIcon("common/logos/wwm_120x120.png"));
         buildTable();
     }
 
+    /**
+     * Setzt die ActionListener für die verschiedenen Buttons dieses Fensters
+     */
     private void setActionListeners()
     {
         closeButton.addActionListener(new ActionListener() {

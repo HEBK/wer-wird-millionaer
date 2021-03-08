@@ -28,12 +28,10 @@ public class HighscoresList extends FrameTemplate {
      */
     private JLabel logoImage;
 
-
     /**
      * Label welches die Informationen über die Anzahl der Elemente in der Tabelle enthält
      */
     private JLabel entryCountLabel;
-
 
     /**
      * Button zum entfernen eines Datensatzes (Highscore)
@@ -45,10 +43,20 @@ public class HighscoresList extends FrameTemplate {
      */
     private JButton closeButton;
 
-
-    // Table
+    /**
+     * ScrollPane für die Tabelle.
+     * Ermöglicht das scrollen der Tabelle bei vielen Einträgen
+     */
     private JScrollPane tableScrollPane;
+
+    /**
+     * TableModel für die Tabelle
+     */
     private DefaultTableModel highscoresTableModel;
+
+    /**
+     * Tabelle
+     */
     private JTable highscoresTable;
 
     /**
@@ -115,7 +123,7 @@ public class HighscoresList extends FrameTemplate {
             data[i][0] = hm.get("ID");
             data[i][1] = hm.get("gamerTag");
             data[i][2] = hm.get("gameName");
-            data[i][3] = Utils.getQuestionMoneyAmount(Integer.parseInt(hm.get("solvedQuestions")));
+            data[i][3] = Utils.questioNumbertoString(Integer.parseInt(hm.get("solvedQuestions")));
             data[i][4] = hm.get("usedJokersCount");
         }
         return data;

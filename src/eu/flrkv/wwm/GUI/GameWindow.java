@@ -14,37 +14,90 @@ import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.util.*;
 
+/**
+ * Spielfenster
+ */
 public class GameWindow extends FrameTemplate {
 
-    // Base panel
-    private JPanel panel1;
+    /**
+     * JPanel welches alle weiteren Elemente für dieses Fenster enthält
+     */
+    private JPanel gamePanel;
 
-    // Logo
+    /**
+     * JLabel für das Logo
+     */
     private JLabel logo;
 
-    // Question Label
+    /**
+     * JLabel zum anzeigen der aktuellen Fragestellung
+     */
     private JLabel questionLabel;
 
-    // Answer Buttons
-    private JButton buttonAnswerA; // 0
+    /**
+     * Button für die erste Antwortmöglichkeit (A)
+     */
+    private JButton buttonAnswerA; // 0#
+
+    /**
+     * Button für die zweite Antwortmöglichkeit (B)
+     */
     private JButton buttonAnswerB; // 1
+
+    /**
+     * Button für die dritte Antwortmöglichkeit (C)
+     */
     private JButton buttonAnswerC; // 2
+
+    /**
+     * Button für die vierte Antwortmöglichkeit (D)
+     */
     private JButton buttonAnswerD; // 3
+
+    /**
+     * Buttons zum Antworten als Array
+     */
     private JButton[] answerButtons = new JButton[4];
+
+    /**
+     * Array mit den Wahrheitswerten für die richtige und die falschen Antworten
+     */
     private boolean[] answerSet = new boolean[4];
 
-    // Jokers
+    /**
+     * JLabel mit dem Icon für den F&uuml;nfzig-F&uuml;nfzig-Joker
+     */
     private JLabel fiftyFiftyJoker;
+
+    /**
+     * JLabel mit dem Icon für den Telefon-Joker
+     */
     private JLabel phoneJoker;
+
+    /**
+     * JLabel mit dem Icon für den Publikums-Joker
+     */
     private JLabel audienceJoker;
 
-    // Main Menu Button
+    /**
+     * Button um zum Hauptmen&uuml; zur&uuml;ck zu gelangen
+     */
     private JButton mainMenuButton;
 
-    // Label that displays the current amount question
-    private JLabel currentQuestionMoneyAmount;
+    /**
+     * Button um bei der letzten gel&ouml;sten Frage das Spiel zu verlassen
+     */
     private JButton takeMoneyExitButton;
+
+    /**
+     * Button um das Spiel zwischenzuspeichern
+     */
     private JButton saveGameButton;
+
+    /**
+     * JLabel, welches den Geldwert f&uuml;r die aktuelle Frage anzeigt
+     */
+    private JLabel currentQuestionMoneyAmount;
 
 
     /**
@@ -82,11 +135,15 @@ public class GameWindow extends FrameTemplate {
 
         setFrameTitle(currentGame.getGamerTag(), currentGame.getGameName(), currentGame.getGameID());
 
-        this.add(panel1);
+        this.add(gamePanel);
 
         buildGameWindow();
     }
 
+
+    /**
+     * Setzt die durchkreuzten Logos für die Joker falls diese bereits verwendet wurden
+     */
     private void setJokerImages()
     {
         if (currentGame.jokerIsUsed("phone")) phoneJoker.setIcon(new ImageIcon("common/icons/jokers/used_jokerPhone_h64.png"));
@@ -94,6 +151,9 @@ public class GameWindow extends FrameTemplate {
         if (currentGame.jokerIsUsed("audience")) audienceJoker.setIcon(new ImageIcon("common/icons/jokers/used_jokerAudience_h64.png"));
     }
 
+    /**
+     * Setzt die Eigenschaften dieses Fensters
+     */
     private void setWindowProperties()
     {
         this.setVisible(true);
@@ -108,6 +168,9 @@ public class GameWindow extends FrameTemplate {
 
     }
 
+    /**
+     * IntelliJ Frame Builder method
+     */
     private void createUIComponents() {
         logo = new JLabel(new ImageIcon("common/logos/wwm_120x120.png"));
 
@@ -117,6 +180,9 @@ public class GameWindow extends FrameTemplate {
     }
 
 
+    /**
+     * Initialisiert die EventListener für die Klick-Aktionen der Joker
+     */
     private void initJokerListeners()
     {
         audienceJoker.addMouseListener(new MouseAdapter() {
@@ -144,7 +210,9 @@ public class GameWindow extends FrameTemplate {
 
     }
 
-
+    /**
+     * Setzt die EventListener/ActionListener für die Buttons
+     */
     private void initButtonListeners()
     {
         // MainMenu Button
@@ -172,9 +240,9 @@ public class GameWindow extends FrameTemplate {
         takeMoneyExitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int confirmExit = JOptionPane.showConfirmDialog(null, "Sind Sie sicher, dass Sie das Spiel mit "+Utils.getQuestionMoneyAmount(currentGame.getCurrentQuestionNumber()-1) + " verlassen möchten?", "Wer wird Millionär | Spiel verlassen", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                int confirmExit = JOptionPane.showConfirmDialog(null, "Sind Sie sicher, dass Sie das Spiel mit "+Utils.questioNumbertoString(currentGame.getCurrentQuestionNumber()-1) + " verlassen möchten?", "Wer wird Millionär | Spiel verlassen", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (confirmExit == JOptionPane.YES_OPTION) {
-                    JOptionPane.showMessageDialog(null, "Herzlichen Glückwunsch! Sie haben " + Utils.getQuestionMoneyAmount(currentGame.getCurrentQuestionNumber()-1) + " erspielt!", "Wer wird Millionär | Spiel verlassen", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Herzlichen Glückwunsch! Sie haben " + Utils.questioNumbertoString(currentGame.getCurrentQuestionNumber()-1) + " erspielt!", "Wer wird Millionär | Spiel verlassen", JOptionPane.INFORMATION_MESSAGE);
                     int bestlistSelect = JOptionPane.showConfirmDialog(null, "Soll dieser Spielstand in die Bestenliste aufgenommen werden?", "Wer wird Millionär | Bestenliste", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
                     if (bestlistSelect == JOptionPane.YES_OPTION) {
@@ -224,7 +292,10 @@ public class GameWindow extends FrameTemplate {
         buttonAnswerD.addActionListener(answerValidation);
     }
 
-    private void setRigthInAnswerSet()
+    /**
+     * Setzt im Array für die Wahrheitswerte der Antworten die richtige Antwort auf true
+     */
+    private void setRightInAnswerSet()
     {
         answerSet[0] = buttonAnswerA.getText().equals(currentGame.getCurrentQuestion().getRightAnswer());
         answerSet[1] = buttonAnswerB.getText().equals(currentGame.getCurrentQuestion().getRightAnswer());
@@ -255,7 +326,7 @@ public class GameWindow extends FrameTemplate {
         questionLabel.requestFocus();
 
         // Geldbetrag für die aktuelle Frage setzen
-        currentQuestionMoneyAmount.setText(Utils.getQuestionMoneyAmount(currentGame.getCurrentQuestionNumber()));
+        currentQuestionMoneyAmount.setText(Utils.questioNumbertoString(currentGame.getCurrentQuestionNumber()));
 
         // Label für die Frage überschreiben
         questionLabel.setText(currentGame.getCurrentQuestion().getQuestion());
@@ -276,7 +347,7 @@ public class GameWindow extends FrameTemplate {
         answerButtons[2].setText(answers[2]);
         answerButtons[3].setText(answers[3]);
 
-        setRigthInAnswerSet();
+        setRightInAnswerSet();
         System.out.println(Arrays.toString(answerSet));
     }
 
@@ -361,7 +432,29 @@ public class GameWindow extends FrameTemplate {
 
 
         /*
-         * TODO: Funktioniert noch nicht :(
+                     / \
+                    / _ \
+                   | / \ |
+                   ||   || _______
+                   ||   || |\     \
+                   ||   || ||\     \
+                   ||   || || \    |
+                   ||   || ||  \__/
+                   ||   || ||   ||
+                    \\_/ \_/ \_//
+                   /   _     _   \
+                  /               \
+                  |    O     O    |
+                  |   \  ___  /   |
+                 /     \ \_/ /     \
+                /  -----  |  --\    \
+                |     \__/|\__/ \   |
+                \       |_|_|       /
+                 \_____       _____/
+                       \     /
+                       |     |
+
+               Hasi ist traurig weil der Joker nicht funktioniert :(
          */
 
 
@@ -385,14 +478,6 @@ public class GameWindow extends FrameTemplate {
             };
             double[] percentVals = new double[4];
 
-            // 66% Chance
-            if (r.nextInt(3) > 0) {
-                ArrayList<Integer> used = new ArrayList<Integer>();
-                percentVals[getRightAnswerID()] = sortedArray[0];
-                used.add(getRightAnswerID());
-
-
-            }
 
 
 
@@ -403,17 +488,14 @@ public class GameWindow extends FrameTemplate {
         }
     }
 
-
-
-
+    /**
+     * Setzt den Fenster-Titel bestehend aus dem Spielernamen und Spielnamen
+     * @param pGamerTag Spielernamen
+     * @param pGameName Spielname
+     * @param pGameID SpielID
+     */
     public void setFrameTitle(String pGamerTag, String pGameName, int pGameID)
     {
         this.setTitle("Wer wird Millionär | InGame - " + pGamerTag + "@" + pGameName + " ("+pGameID+")");
-    }
-
-    private void autoResizeFrame()
-    {
-        this.pack();
-        this.setMinimumSize(new Rectangle(getBounds()).getSize());
     }
 }

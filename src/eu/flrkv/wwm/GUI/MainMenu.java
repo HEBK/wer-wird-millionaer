@@ -7,18 +7,60 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * JFrame f&uuml;r das Hauptmen&uuml;
+ */
 public class MainMenu extends FrameTemplate {
+
+    /**
+     * JPanel welches alle weiteren Elemente für dieses Fenster enthält
+     */
     private JPanel mainMenu;
-    private JButton newGameButton;
-    private JButton exitGameButton;
-    private JButton aboutButton;
+
+    /**
+     * JLabel für das Logo
+     */
     private JLabel wwmImage;
+
+    /**
+     * Button um ein neues Spiel zu starten
+     */
+    private JButton newGameButton;
+
+    /**
+     * Button um das Spiel zu beenden
+     */
+    private JButton exitGameButton;
+
+    /**
+     * Button um die Spielinformationen anzuzeigen
+     */
+    private JButton aboutButton;
+
+    /**
+     * Button um die Fragenliste zu &ouml;ffnen
+     */
     private JButton questionListButton;
+
+    /**
+     * Button um die Spielst&auml;nde anzuzeigen
+     */
     private JButton saveGamesButton;
+
+    /**
+     * Button um die Bestenliste zu &ouml;ffnen
+     */
     private JButton highscoresButton;
 
+    /**
+     * GUIController für dieses Fenster
+     */
     private GUIController myController;
 
+    /**
+     * Konstruktor der Klasse MainMenu
+     * @param pController GUIController für dieses Fenster
+     */
     public MainMenu(GUIController pController)
     {
         // Call of the parent constructor
@@ -67,7 +109,9 @@ public class MainMenu extends FrameTemplate {
 
     }
 
-
+    /**
+     * IntelliJ Frame Builder method
+     */
     private void createUIComponents() {
         wwmImage = new JLabel(new ImageIcon("common/logos/wwm_120x120.png"));
     }

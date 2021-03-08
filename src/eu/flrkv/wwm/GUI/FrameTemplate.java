@@ -23,7 +23,7 @@ public abstract class FrameTemplate extends JFrame {
         super(pTitle);
 
         // Set the icon of the window
-        this.setIconImage(Utils.getImageIcon().getImage());
+        this.setIconImage(new ImageIcon("common/logos/wwm.png").getImage());
 
         // Set the dimensions of the window
         this.setSize(pDimension);

@@ -13,6 +13,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+
+/**
+ * Klasse zur Verwaltung der Spiel-Fragen
+ *
+ * Kann als Objekt initialisiert werden um spezifisch f&uuml;r ein Spiel Fragen aus der Datenbanmk zu holen.
+ */
 public class QuestionController {
 
     /**
@@ -50,13 +56,21 @@ public class QuestionController {
         return i;
     }
 
+    /**
+     * Pr&uuml;ft anhand einer FrageID ob die Frage bereits genutzt wurde
+     * @param pID FragenID
+     * @return Gibt true zur&uuml; falls die Frage bereits genutzt wurde
+     */
     private boolean questionIsUsed(int pID)
     {
         int[] i = getIDsOfUsedQuestions();
         return Arrays.stream(i).anyMatch(j -> j == pID);
     }
 
-
+    /**
+     * Setzt eine Frage als bereits genutzt
+     * @param pQuestion Fragenobjekt
+     */
     private void setQuestionUsed(Question pQuestion)
     {
         if (game.getUsedQuestions() == null) {
@@ -89,6 +103,11 @@ public class QuestionController {
      * Static section
      */
 
+    /**
+     * Mischt die Antwortmöglichkeiten (Positionen des Arrays) durch
+     * @param pQuestion Fragenobjekt
+     * @return Array mit gemischten Antworten
+     */
     public static String[] getMixedAnswerArray(Question pQuestion)
     {
         String[] answerArray = {pQuestion.getWrongAnswers()[0], pQuestion.getWrongAnswers()[1], pQuestion.getWrongAnswers()[2], pQuestion.getRightAnswer()};
@@ -114,7 +133,6 @@ public class QuestionController {
         }
         return null;
     }
-
 
     /**
      * Speichert eine neue Frage in die Datenbank
@@ -147,19 +165,10 @@ public class QuestionController {
     }
 
     /**
-     * Speichert eine neue Frage in der Datenbank
-     * @param pQuestion Frage als Objekt des Datentyps Frage
-     * @return Gibt true als boolean zurück, wenn die Frage erfolgreich abgespeichert wurde.
-     */
-    public static boolean addQuestion(Question pQuestion)
-    {
-        return addQuestion(pQuestion.getDifficulty(), pQuestion.getQuestion(), pQuestion.getWrongAnswers()[0], pQuestion.getWrongAnswers()[1], pQuestion.getWrongAnswers()[2], pQuestion.getRightAnswer());
-    }
-
-    /**
      * Holt eine Frage mit einer bestimmten ID aus der Datenbank.
      * @param pQuestionID ID der Frage, die gelesen werden soll.
      * @return Gibt die Frage als Objekt zurück. Wenn keine Frage mit der ID existiert wird null zurückgegeben.
+     * @throws QuestionNotFoundException falls der Spielstand nicht gefunden wurde
      */
     public static Question getQuestion(int pQuestionID) throws QuestionNotFoundException {
         try {
@@ -175,6 +184,11 @@ public class QuestionController {
         throw new QuestionNotFoundException("A Question with that ID could not be found!");
     }
 
+    /**
+     * L&ouml;scht eine Frage anhand der ID
+     * @param pQuestionID FragenID
+     * @return Gibt true zur&uuml;ck wenn die Frage erfolgreich gel&ouml;scht wurde
+     */
     public static boolean deleteQuestion(int pQuestionID) {
         try {
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("DELETE FROM wwm_questions WHERE ID = ?");

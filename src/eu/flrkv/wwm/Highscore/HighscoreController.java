@@ -2,7 +2,6 @@ package eu.flrkv.wwm.Highscore;
 
 import eu.flrkv.wwm.Storage.DatabaseConnection;
 import eu.flrkv.wwm.Utils.Utils;
-import org.apache.ibatis.jdbc.SQL;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,10 +9,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+/**
+ * Klasse zum Verwalten der Eintr&auml;ge der Bestenliste
+ */
 public class HighscoreController {
 
-
-
+    /**
+     * F&uuml;gt einen Highscore der Bestenliste hinzu
+     * @param pGamerTag Spielername
+     * @param pGameName Spielname
+     * @param solvedQuestions Anzahl der gel&ouml;sten Fragen
+     * @param usedJokersCount Anzahl der eingesetzten Joker
+     * @return Gibt true zurück wenn der Highscore erstellt wurde
+     */
     public static boolean addHighscore(String pGamerTag, String pGameName, int solvedQuestions, int usedJokersCount)
     {
         try {
@@ -31,6 +40,10 @@ public class HighscoreController {
         return false;
     }
 
+    /**
+     * Liefert alle Highscores in einer ArrayList bestehend aus HashMaps zurück.
+     * @return Highscores als ArrayList
+     */
     public static ArrayList<HashMap<String, String>> getAllHighscores()
     {
         ArrayList<HashMap<String, String>> highscores = new ArrayList<>();
@@ -55,6 +68,11 @@ public class HighscoreController {
         return highscores;
     }
 
+    /**
+     * L&ouml;scht einen Highscore anhand seiner ID aus der Bestenliste
+     * @param pID ID des zu l&ouml;schenden Highscores
+     * @return Gibt true zurück wenn der Highscore gel&ouml;scht wurde
+     */
     public static boolean deleteHighscore(int pID)
     {
         try {
@@ -66,6 +84,4 @@ public class HighscoreController {
         }
         return false;
     }
-
-
 }

@@ -9,9 +9,20 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
 
+/**
+ * Klasse zum Herstellen und Pr&uuml;fen der Datenbankverbindung
+ */
 public class DatabaseConnection {
 
-
+    /**
+     * Pr&uuml;ft die &uuml;bergebenen Daten auf ihre G&uuml;ltigkeit
+     * @param pHost Hostname des Datenbank-Servers
+     * @param pPort Datenbank-Port
+     * @param pUser Datenbank-User
+     * @param pPassword Passwort f&uuml;r den Benutzer
+     * @param pDatabase Datenbankname
+     * @return Gibt true zur&uuml;ck falls die Verbindung erfolgreich war
+     */
     public static boolean checkConnection(String pHost, String pPort, String pUser, String pPassword, String pDatabase)
     {
         try {
@@ -23,6 +34,11 @@ public class DatabaseConnection {
         return false;
     }
 
+    /**
+     * Gibt das Connection Objekt der gespeicherten Datenbankverbinfung zur&uuml;ck
+     * @return Connection Objekt der gespeicherten Datenbankverbinfung
+     * @throws SQLException Falls ein Fehler bei der Verbindung auftrat
+     */
     public static Connection getConnection() throws SQLException {
         if (!credentialsValid()) {
             Utils.consoleLog("ERROR", "Can not use database connection. Config or credentials are invalid!");
@@ -31,6 +47,10 @@ public class DatabaseConnection {
         return DriverManager.getConnection("jdbc:mysql://" + DatabaseConfiguration.readConfig("db_host") + ":" + DatabaseConfiguration.readConfig("db_port") + "/" +DatabaseConfiguration.readConfig("db_name"), DatabaseConfiguration.readConfig("db_user"), DatabaseConfiguration.readConfig("db_pass"));
     }
 
+    /**
+     * Pr&uuml;ft ob die hinterlegten Daten f&uuml;r die Verbindung g&uuml;ltig sind
+     * @return true, falls die Daten g&uuml;ltig sind
+     */
     public static boolean credentialsValid()
     {
         if (DatabaseConfiguration.configExists()) {
