@@ -163,7 +163,7 @@
             </constraints>
             <properties>
               <font name="JetBrains Mono" size="12" style="0"/>
-              <text value="Version: v1.0.1"/>
+              <text value="Version: v1.1.0"/>
             </properties>
           </component>
         </children>

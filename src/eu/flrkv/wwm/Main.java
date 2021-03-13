@@ -28,15 +28,12 @@ public class Main {
 
         // Create GUIController & Start GUI
         GUIController g = new GUIController();
-
-
         SwingUtilities.invokeLater(new Runnable(){
             @Override
             public void run(){
                 g.run();
             }
         });
-       // g.run();
     }
 
     /**
