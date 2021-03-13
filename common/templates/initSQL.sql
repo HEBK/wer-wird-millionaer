@@ -58,15 +58,25 @@ INSERT INTO `wwm_questions` (difficulty, question, answer0, answer1, answer2, an
     (1, 'Welcher Planet unseres Sonnensystems ist der Sonne am nächsten?', 'Venus', 'Uranus', 'Pluto', 'Merkur'),
     (1, 'Welches Land ist flächenmäßig das zweitgrößte der Erde?', 'China', 'Russland', 'USA', 'Kanada'),
     (1, 'Wie viele Planeten hat unser Sonnensystem?', '7', '9', '10', '8'),
+    (1, 'Wie heißt Pippi Langstrumpfs Affe?', 'Herr Schuler', 'Herr Peterson', 'Herr Mayer', 'Herr Nielson'),
     (1, 'Wie viele Sekunden hat ein Tag?', '24', '32400', '6400', '86400'),
+    (1, 'Wie nennt man einen jungen Hund?', 'Fohlen', 'Ferkel', 'Kitz', 'Welpe'),
     (1, 'Wer wählt den Bundespräsidenten?', 'Bundeskanzler', 'Bundesrat', 'Bundestag', 'Bundesversammlung'),
     (1, 'Wofür steht die Abkürzung KGaA?', 'Kreditgesellschaft auf Aktien', 'Kompetenzgesellschaft auf Aktien', 'Kardinalgesellschaft auf Aktien', 'Kommanditgesellschaft auf Aktien'),
     (1, 'Wer ist der derzeitige Bundestagspräsident? (2021)', 'Thomas Oppermann', 'Wolfgang Kubicki', 'Petra Pau', 'Wolfgang Schäuble'),
     (1, 'Welcher Partei gehörte der 16. US-Präsident Abraham Lincoln an?', 'Demokratische Partei', 'Grüne Partei', 'Parteilos', 'Republikanische Partei'),
     (1, 'Gegen welchen US-Präsident wurden erstmals mehr als ein Impeachment-Verfahren gestartet?', 'Richard Nixon', 'Dwight D. Eisenhower', 'George H. W. Bush', 'Donald Trump'),
     (1, 'Was ist das beste Fach der Welt?', 'Soziologie', 'Englisch', 'Mathematik', 'Informatik'),
+    (1, 'Was ist H2O?', 'Helium', 'Wasserstoff', 'Sauerstoff', 'Wasser'),
+    (1, 'In welchem Land wohnen die meisten Menschen?', 'Kenia', 'Russland', 'USA', 'China'),
+    (1, 'Auf welchem Kontinent liegt die Wüste Sahara?', 'Asien', 'Europa', 'Amerika', 'Afrika'),
+    (1, 'Wie heißt der höchste Berg der Welt?', 'Alpen', 'Zugspitze', 'Annapurna', 'Mount Everest'),
+    (1, 'Wenn du die Buchstaben im Wort "Tatalink" anders anordnest, erhältst du den Namen...', '... eines Baumes', '... eines Landes', '... einer Stadt', '... eines Ozeans'),
+
 
     -- Mittlere Fragen
+    (2, 'Die Freiheitsstatue in New York war ein Geschenk von:', 'Großbritannien', 'Kanada', 'Kanada', 'Frankreich'),
+    (2, 'Wann ging der Erste Weltkrieg zu Ende?', '1914', '1944', '1948', '1918'),
     (2, 'In welcher Sendung kamen unter anderem Jeanette Biedermann, Mark Forster und Lena Meyer-Landrut ins Tauschgeschäft?', 'Koch mein Leibgericht', 'Verführ meine Frau', 'Bewohn mein Haus', 'Sing meinen Song'),
     (2, 'Was mancher selbst im nüchternen Zustand nicht hinbekommt: Korrekt schreibt sich der beliebte Cocktail …?', 'Caipirinja', 'Cajpirinha', 'Caijpiriña', 'Caipirinha'),
     (2, 'Wobei wird vor einem sogenannten Rebound-Effekt gewarnt, der nicht selten zu einer Abhängigkeit führt?', 'Haarspray', 'Deospray', 'Pfefferspray', 'Nasenspray'),
@@ -95,6 +105,7 @@ INSERT INTO `wwm_questions` (difficulty, question, answer0, answer1, answer2, an
     (2, 'Wie lauten die ersten 7 Nachkommstellen von π?', '2,7182818', '3,0425925', '3,1515821', '3,1415926'),
     (2, 'Wann wurde das Hermann-Emanuel-Berufskolleg gegründet?', '1904', '1917', '1899', '1909'),
     (2, 'Wann endete das Zeitalter der Antike?', '400 n. Christi', '700 n. Christi', '550 n. Christi', '600 n. Christi'),
+    (2, 'Welches Instrument hat Tasten, Pedale und Saiten?', 'Gitarre', 'Violine', 'Harfe', 'Klavier'),
 
     -- Schwere Fragen
     (3, 'Wo befinden sich einige der höchsten Alpengipfel?', 'Monte-Purpur-Höhenzug', 'Monte-Lila-Gebirge', 'Monte-Magenta-Kette', 'Monte-Rosa-Massiv'),
@@ -113,6 +124,7 @@ INSERT INTO `wwm_questions` (difficulty, question, answer0, answer1, answer2, an
     (3, 'Welcher Schauspieler verkörperte im Jahr 1965 James Bond?', 'Timothy Dalton', 'Roger Moore', 'Pierce Brosnan', 'Sean Connery'),
     (3, 'Wie viele Jahre dauert es in etwa bis der Jupiter die Sonne umrundet hat?', '24 Jahre', '16 Jahre', '20 Jahre', '12 Jahre'),
     (3, 'Wie lauten die ersten 4 Nachkommastellen der Eulerschen Zahl e?', '2,8621', '2,5171', '3,1415', '2,7182'),
+    (3, 'Wer hat einen Hammer und eine Feder auf den Mond fallen lassen, um zu demonstrieren, dass sie ohne Luft gleich schnell fallen?', 'Buzz Lightyear', 'Jack Matthew', 'Neil Armstrong', 'David R. Scott'),
     (3, 'Wie weit ist Alpha Centauri ungefähr von der Sonne entfernt?', '3,105 Lichtjahre', '7,295 Lichtjahre', '10,203 Lichtjahre', '4,367 Lichtjahre'),
     (3, 'Die klassisch genormte Europalette EPAL1 besteht aus 78 Nägeln, neun Klötzen und insgesamt wie vielen Brettern?', 'neun', 'zehn', 'zwölf', 'elf');
 
