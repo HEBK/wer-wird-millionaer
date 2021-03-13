@@ -53,6 +53,7 @@ public class MySQLConn extends FrameTemplate {
      * JLabel zum anzeigen etwaiger Fehler- oder Best&auml;tigungsmeldungen
      */
     private JLabel response;
+    private JLabel logo;
 
     /**
      * GUIController für dieses Fenster
@@ -66,7 +67,7 @@ public class MySQLConn extends FrameTemplate {
      */
     public MySQLConn(GUIController pController) {
         // Call the parent constructor
-        super("Wer wird Millionär | Datenbankverbindung", new Dimension(600, 335));
+        super("Wer wird Millionär | Datenbankverbindung", new Dimension(650, 475));
 
         // Set the GUIController for this window
         myController = pController;
@@ -132,5 +133,10 @@ public class MySQLConn extends FrameTemplate {
         checkSave.addActionListener(saveDBConn);
     }
 
-
+    /**
+     * IntelliJ Frame Builder method
+     */
+    private void createUIComponents() {
+        logo = new JLabel(new ImageIcon("common/logos/wwm_120x120.png"));
+    }
 }
