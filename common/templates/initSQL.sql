@@ -58,7 +58,7 @@ INSERT INTO `wwm_questions` (difficulty, question, answer0, answer1, answer2, an
     (1, 'Welcher Planet unseres Sonnensystems ist der Sonne am nächsten?', 'Venus', 'Uranus', 'Pluto', 'Merkur'),
     (1, 'Welches Land ist flächenmäßig das zweitgrößte der Erde?', 'China', 'Russland', 'USA', 'Kanada'),
     (1, 'Wie viele Planeten hat unser Sonnensystem?', '7', '9', '10', '8'),
-    (1, 'Wie heißt Pippi Langstrumpfs Affe?', 'Herr Schuler', 'Herr Peterson', 'Herr Nielson', 'Herr Mayer'),
+    (1, 'Wie heißt Pippi Langstrumpfs Affe?', 'Herr Schuler', 'Herr Peterson', 'Herr Mayer', 'Herr Nielson'),
     (1, 'Wie viele Sekunden hat ein Tag?', '24', '32400', '6400', '86400'),
     (1, 'Wie nennt man einen jungen Hund?', 'Fohlen', 'Ferkel', 'Kitz', 'Welpe'),
     (1, 'Wer wählt den Bundespräsidenten?', 'Bundeskanzler', 'Bundesrat', 'Bundestag', 'Bundesversammlung'),
