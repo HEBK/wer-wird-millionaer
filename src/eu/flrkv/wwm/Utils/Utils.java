@@ -1,6 +1,11 @@
 package eu.flrkv.wwm.Utils;
 
 import javax.swing.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Klasse mit hilfreichen Methoden
@@ -158,4 +163,53 @@ public class Utils {
     {
         return (int) ((Math.random() * (pMax - pMin)) + pMin);
     }
+
+    /**
+     * Mischt die Elemente des Arrays zuf&auml;llig durch und gibt es zur&uuml;ck.
+     * @param pArray Array
+     * @return Shuffled Array
+     */
+    public static int[] shuffleArray(int[] pArray) {
+        Random rnd = ThreadLocalRandom.current();
+        for (int i = pArray.length - 1; i > 0; i--)
+        {
+            int index = rnd.nextInt(i + 1);
+            // Simple swap
+            int a = pArray[index];
+            pArray[index] = pArray[i];
+            pArray[i] = a;
+        }
+        return pArray;
+    }
+
+    /**
+     * Mischt die Elemente des Arrays zuf&auml;llig durch und gibt es zur&uuml;ck.
+     * @param pArray Array
+     * @return Shuffled Array
+     */
+    public static double[] shuffleArray(double[] pArray) {
+        Random rnd = ThreadLocalRandom.current();
+        for (int i = pArray.length - 1; i > 0; i--)
+        {
+            int index = rnd.nextInt(i + 1);
+            // Simple swap
+            double a = pArray[index];
+            pArray[index] = pArray[i];
+            pArray[i] = a;
+        }
+        return pArray;
+    }
+
+    /**
+     * Mischt die Elemente des Arrays zuf&auml;llig durch und gibt es zur&uuml;ck.
+     * @param pArray Array
+     * @return Shuffled Array
+     */
+    public static String[] shuffleArray(String[] pArray) {
+        List<String> answerList = Arrays.asList(pArray);
+        Collections.shuffle(answerList);
+        answerList.toArray(pArray);
+        return pArray;
+    }
+
 }

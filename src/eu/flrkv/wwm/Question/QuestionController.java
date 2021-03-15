@@ -83,7 +83,7 @@ public class QuestionController {
     }
 
     /**
-     * Holte eine neu noch nicht verwendete Frage aus der MySQL-Dtaenbanktabelle 'wwm_questions'
+     * Gíbt eine neu noch nicht verwendete Frage aus der MySQL-Datenbanktabelle 'wwm_questions' zurück
      * @param pDifficulty Schwierigkeitskategorie der Frage (0 -> Leicht, 1 -> Mittel, 2 -> Schwer)
      * @return Gibt die Frage als Objekt zurück.
      */

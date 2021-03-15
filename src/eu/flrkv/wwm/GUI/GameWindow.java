@@ -7,6 +7,7 @@ import eu.flrkv.wwm.Utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -454,7 +455,7 @@ public class GameWindow extends FrameTemplate {
                        \     /
                        |     |
 
-               Hasi ist traurig weil der Joker nicht funktioniert :(
+               Hasi ist fröhlich weil der Joker endlich funktioniert :)
          */
 
 
@@ -468,23 +469,41 @@ public class GameWindow extends FrameTemplate {
                 return;
             }
 
-
-            Random r = new Random();
+            int rightAnswer = getRightAnswerID();
             int[] sortedArray = {
                     Utils.getRandomNumber(1000, 750),
                     Utils.getRandomNumber(750, 500),
                     Utils.getRandomNumber(500, 250),
                     Utils.getRandomNumber(250, 0)
             };
+            int sumUp = Utils.sumUpArrayVals(sortedArray);
             double[] percentVals = new double[4];
 
+            if (new Random().nextInt(100) <= 69) {
+                percentVals[rightAnswer] = sortedArray[0];
 
-
+                for (int i=1; i < sortedArray.length; i++) {
+                    if (i != rightAnswer) {
+                        percentVals[i] = sortedArray[i];
+                        sortedArray[i] = -1;
+                    }
+                }
+                for (int i=1; i < sortedArray.length; i++) {
+                    if (sortedArray[i] != -1) {
+                        percentVals[0] = sortedArray[i];
+                    }
+                }
+            } else {
+                sortedArray = Utils.shuffleArray(sortedArray);
+                for (int i=0; i < sortedArray.length; i++) {
+                    percentVals[i] = sortedArray[i];
+                }
+            }
 
             currentGame.useJoker("audience");
             audienceJoker.setIcon(new ImageIcon("common/icons/jokers/used_jokerAudience_h64.png"));
             DecimalFormat df = new DecimalFormat("#0.00");
-            JOptionPane.showMessageDialog(this, "Ergebnisse der Publikumsbefragung:\n\nA) "+df.format(Utils.calcPercent(percentVals[0], Utils.sumUpArrayVals(sortedArray)))+" %\nB) "+df.format(Utils.calcPercent(percentVals[1], Utils.sumUpArrayVals(sortedArray)))+" %\nC) "+df.format(Utils.calcPercent(percentVals[2], Utils.sumUpArrayVals(sortedArray)))+" %\nD) "+df.format(Utils.calcPercent(percentVals[3], Utils.sumUpArrayVals(sortedArray))) + " %");
+            JOptionPane.showMessageDialog(this, "Ergebnisse der Publikumsbefragung:\n\nA) "+df.format(Utils.calcPercent(percentVals[0], sumUp))+" %\nB) "+df.format(Utils.calcPercent(percentVals[1], sumUp))+" %\nC) "+df.format(Utils.calcPercent(percentVals[2], sumUp))+" %\nD) "+df.format(Utils.calcPercent(percentVals[3], sumUp)) + " %", "Wer wird Millionär | Joker", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
