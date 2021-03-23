@@ -273,6 +273,8 @@ public class GameWindow extends FrameTemplate {
                     } else {
                         JOptionPane.showMessageDialog(null, "Du hast die eine Millionen geknackt!", "Wer wird Millionär | 1 Million!", JOptionPane.INFORMATION_MESSAGE);
                         if (JOptionPane.showConfirmDialog(null, "Soll dieser Spielstand in die Bestenliste aufgenommen werden?", "Wer wird Millionär | Bestenliste", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                            // Simulate being at question 16 to save higscore to 1 Mio
+                            currentGame.setCurrentQuestionNumber(currentGame.getCurrentQuestionNumber()+1);
                             if (!currentGame.addToHighscores(false)) {
                                 JOptionPane.showMessageDialog(null, "Fehler beim Speichern des Highscores!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
                             }
