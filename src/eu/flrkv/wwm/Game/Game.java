@@ -209,6 +209,15 @@ public class Game {
     }
 
     /**
+     * Setzt die Nummer der aktuellen Frage
+     * @param pQuestionNumber Nummer der Frage (1-15(16))
+     */
+    public void setCurrentQuestionNumber(int pQuestionNumber)
+    {
+        this.currentQuestionNumber = (pQuestionNumber > 0 && pQuestionNumber <= 16) ? pQuestionNumber : currentQuestionNumber;
+    }
+
+    /**
      * Gibt die aktuelle Frage zurück
      * @return Aktzuelle Frage in Form eines Question Objekts
      */

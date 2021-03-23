@@ -45,7 +45,7 @@
             </constraints>
             <properties>
               <font name="Arial" size="16" style="1"/>
-              <text value="Wer wird Millionär - v1.2.0"/>
+              <text value="Wer wird Millionär - v1.2.1"/>
             </properties>
           </component>
         </children>
@@ -108,7 +108,7 @@
             </constraints>
             <properties>
               <font name="Arial" size="10" style="0"/>
-              <text value="Copyright (c) 2020 - Liz R., Jost V., Florian K."/>
+              <text value="Copyright (c) 2021 - Liz R., Jost V., Florian K."/>
             </properties>
           </component>
         </children>
