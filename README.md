@@ -21,7 +21,7 @@ Dabei werden folgende Betriebssysteme unterstützt:
 - Windows Server 2019
 
 Um das Programm nun zu installieren führen sie die folgenden Schritte aus:
-1. Laden Sie den letzten Release herunter. [Zum letzten Release](https://github.com/HEBK/wer-wird-millionaer/releases/latest) | [Letzter Installer](https://cdn.kleine-vorholt.eu/software/hebk/Wer_wird_Millionaer/latest/download.php)
+1. Laden Sie den letzten Release herunter. [Zum letzten Release](https://github.com/HEBK/wer-wird-millionaer/releases/latest) | [Letzter Installer](https://cdn.kleine-vorholt.eu/software/hebk/Wer_wird_Millionaer/dl/download.php?type=exe)
 2. Laden Sie den Installer mithilfe des angezeigten Links herunter.
 3. Führen Sie den heruntergeladenen Installationsasisstenten aus.
 4. Das Programm wurde auf Ihrem Computer installiert.
