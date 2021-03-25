@@ -234,6 +234,8 @@ public class GUIController implements ActionListener {
                         return;
                     }
                 }
+            } else if(select == JOptionPane.NO_OPTION && game.isNewGame()) {
+                game.deleteGame();
             }
 
             // Doch weiter spielen

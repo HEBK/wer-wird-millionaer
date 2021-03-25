@@ -60,6 +60,11 @@ public class Game {
      */
     private Question currentQuestion;
 
+    /**
+     * Speichert den Wahrheitswert WAHR, wenn dies ein neu erstelltes Spiel ist
+     */
+    private boolean isNewGame = false;
+
 
     /**
      * Konstruktor um ein bereits vorhandenes Spiel fortzuführen.
@@ -121,6 +126,9 @@ public class Game {
             Utils.exitProgram(1);
         }
 
+        // Setze Spiel als neues Spiel
+        this.isNewGame = true;
+
         // Übergebenen Spiel- & Spielernamen setzen
         this.gameName = pGameName;
         this.gamerTag = pGamerTag;
@@ -153,6 +161,15 @@ public class Game {
     {
         this.currentQuestion = pQuestion;                       // Frage setzen
         this.currentQuestionNumber = pQuestionNumber;           // FragenID setzen
+    }
+
+    /**
+     * Gibt zurück ob dies ein neu erstelltes oder geladenes Spiel ist
+     * @return true, wenn neues Spiel / false, wenn geladenes Spiel.
+     */
+    public boolean isNewGame()
+    {
+        return this.isNewGame;
     }
 
     /**
@@ -319,6 +336,7 @@ public class Game {
      * @return Gibt true zurück wenn das Spiel erfolgreich gespeichert wurde
      */
     public boolean saveGame() {
+        this.isNewGame = false;
         return GameController.updateGame(this.getGameID(), this.getCurrentQuestionNumber(), this.getCurrentQuestion().getId(), this.usedQuestions, this.usedJokers);
     }
 }
