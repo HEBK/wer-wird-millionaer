@@ -402,7 +402,7 @@ public class GameWindow extends FrameTemplate {
             JOptionPane.showMessageDialog(this, "Dieser Joker wurde bereits eingesetzt!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (JOptionPane.showConfirmDialog(this, "Möchten Sie den Telefon-Joker einsetzen?", "Wer wird Millionär | Joker", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, "Möchten Sie den Telefon-Joker einsetzen? (65%-Chance)", "Wer wird Millionär | Joker", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             if (getRightAnswerID() == null) {
                 Utils.unknownErrorPopup();
                 return;
@@ -410,7 +410,7 @@ public class GameWindow extends FrameTemplate {
             int rightAnswer = getRightAnswerID();
             char propablyAnswer;
             Random r = new Random();
-            if (r.nextInt(101) <= 60) {
+            if (r.nextInt(101) <= 65) {
                 System.out.println(rightAnswer);
                 propablyAnswer = Utils.buttonNoToChar(rightAnswer);
             } else {
@@ -465,7 +465,7 @@ public class GameWindow extends FrameTemplate {
             JOptionPane.showMessageDialog(this, "Dieser Joker wurde bereits eingesetzt!", "Wer wird Millionär | Fehler", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (JOptionPane.showConfirmDialog(this, "Möchten Sie den Publikums-Joker einsetzen?", "Wer wird Millionär | Joker", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, "Möchten Sie den Publikums-Joker einsetzen? (85%-Chance)", "Wer wird Millionär | Joker", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             if (getRightAnswerID() == null) {
                 Utils.unknownErrorPopup();
                 return;
@@ -481,7 +481,7 @@ public class GameWindow extends FrameTemplate {
             int sumUp = Utils.sumUpArrayVals(sortedArray);
             double[] percentVals = new double[4];
 
-            if (new Random().nextInt(100) <= 69) {
+            if (new Random().nextInt(101) <= 85) {
                 percentVals[rightAnswer] = sortedArray[0];
 
                 for (int i=1; i < sortedArray.length; i++) {
